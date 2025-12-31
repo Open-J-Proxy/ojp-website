@@ -3,11 +3,12 @@
 
 :root {
     /* Primary Blue Palette - Professional & Trustworthy */
-    --primary-blue: #0066CC;
-    --primary-blue-dark: #004C99;
-    --primary-blue-light: #3399FF;
-    --secondary-blue: #1E3A8A;
-    --accent-blue: #60A5FA;
+    /* Colors aligned with OJP logo #004F94 */
+    --primary-blue: #004F94;
+    --primary-blue-dark: #003D75;
+    --primary-blue-light: #0066B8;
+    --secondary-blue: #003D75;
+    --accent-blue: #3D8FCC;
     
     /* Neutral Colors */
     --white: #FFFFFF;
