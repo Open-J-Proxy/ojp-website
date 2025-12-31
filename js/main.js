@@ -2,11 +2,50 @@
 
 // Mobile menu toggle functionality
 function initMobileMenu() {
-    // This can be enhanced later for mobile responsive menu
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
     const nav = document.querySelector('nav');
-    if (window.innerWidth < 768) {
-        console.log('Mobile view detected');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    const menuLinks = document.querySelectorAll('nav a');
+    
+    if (!menuToggle || !nav) {
+        return;
     }
+    
+    // Helper function to toggle body scroll
+    function toggleBodyScroll(isMenuOpen) {
+        document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    }
+    
+    // Helper function to close menu
+    function closeMenu() {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('active');
+        if (menuOverlay) {
+            menuOverlay.classList.remove('active');
+        }
+        toggleBodyScroll(false);
+    }
+    
+    // Toggle menu on button click
+    menuToggle.addEventListener('click', () => {
+        const isOpening = !nav.classList.contains('active');
+        menuToggle.classList.toggle('active');
+        nav.classList.toggle('active');
+        if (menuOverlay) {
+            menuOverlay.classList.toggle('active');
+        }
+        toggleBodyScroll(isOpening);
+    });
+    
+    // Close menu when clicking on overlay
+    if (menuOverlay) {
+        menuOverlay.addEventListener('click', closeMenu);
+    }
+    
+    // Close menu when clicking on a menu link
+    menuLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
 }
 
 // Smooth scroll for anchor links
