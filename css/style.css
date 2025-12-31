@@ -37,6 +37,9 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    
+    /* Mobile Menu Animation */
+    --hamburger-transform-offset: 8px;
 }
 
 /* Global Styles */
@@ -470,7 +473,7 @@ footer {
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 8px);
+    transform: rotate(45deg) translate(var(--hamburger-transform-offset), var(--hamburger-transform-offset));
 }
 
 .mobile-menu-toggle.active span:nth-child(2) {
@@ -478,7 +481,7 @@ footer {
 }
 
 .mobile-menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -7px);
+    transform: rotate(-45deg) translate(calc(var(--hamburger-transform-offset) - 1px), calc(-1 * var(--hamburger-transform-offset) + 1px));
 }
 
 /* Responsive Design */
