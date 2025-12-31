@@ -84,7 +84,7 @@ To enable GitHub Pages for this repository:
 
 To use a custom domain with GitHub Pages:
 
-1. **Update the CNAME file**: Edit the `CNAME` file in the repository root and replace the comment with your custom domain:
+1. **Update the CNAME file**: Edit the `CNAME` file in the repository root and replace the entire contents with only your custom domain (no comments or extra lines):
    ```
    example.com
    ```
@@ -92,6 +92,8 @@ To use a custom domain with GitHub Pages:
    ```
    www.example.com
    ```
+   
+   Commit and push this file to the `main` branch.
 
 2. **Configure DNS settings**: Add DNS records with your domain provider:
    
