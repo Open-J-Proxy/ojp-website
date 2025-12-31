@@ -2,11 +2,52 @@
 
 // Mobile menu toggle functionality
 function initMobileMenu() {
-    // This can be enhanced later for mobile responsive menu
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
     const nav = document.querySelector('nav');
-    if (window.innerWidth < 768) {
-        console.log('Mobile view detected');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    const menuLinks = document.querySelectorAll('nav a');
+    
+    if (!menuToggle || !nav) {
+        return;
     }
+    
+    // Toggle menu on button click
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        nav.classList.toggle('active');
+        if (menuOverlay) {
+            menuOverlay.classList.toggle('active');
+        }
+        
+        // Prevent body scroll when menu is open
+        if (nav.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Close menu when clicking on overlay
+    if (menuOverlay) {
+        menuOverlay.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+    
+    // Close menu when clicking on a menu link
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('active');
+            if (menuOverlay) {
+                menuOverlay.classList.remove('active');
+            }
+            document.body.style.overflow = '';
+        });
+    });
 }
 
 // Smooth scroll for anchor links
