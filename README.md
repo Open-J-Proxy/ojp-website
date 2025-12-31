@@ -59,6 +59,64 @@ Then visit `http://localhost:8000` in your browser.
 - Vanilla JavaScript (No framework dependencies)
 - Responsive design (Mobile-friendly)
 
+## Deployment
+
+This website is automatically deployed to GitHub Pages using GitHub Actions.
+
+### How It Works
+
+The deployment workflow is triggered automatically whenever code is pushed to the `main` branch. The workflow:
+
+1. Checks out the repository code
+2. Configures GitHub Pages
+3. Uploads the entire repository as a static site artifact
+4. Deploys the artifact to GitHub Pages
+
+### Enabling GitHub Pages
+
+To enable GitHub Pages for this repository:
+
+1. Go to **Settings** → **Pages** in your GitHub repository
+2. Under **Source**, select **GitHub Actions** as the deployment source
+3. The site will be automatically deployed on the next push to `main`
+
+### Configuring a Custom Domain
+
+To use a custom domain with GitHub Pages:
+
+1. **Update the CNAME file**: Edit the `CNAME` file in the repository root and replace the comment with your custom domain:
+   ```
+   example.com
+   ```
+   or
+   ```
+   www.example.com
+   ```
+
+2. **Configure DNS settings**: Add DNS records with your domain provider:
+   
+   **For an apex domain (example.com):**
+   - Add the following A records pointing to GitHub's IP addresses:
+     ```
+     185.199.108.153
+     185.199.109.153
+     185.199.110.153
+     185.199.111.153
+     ```
+   
+   **For a subdomain (www.example.com):**
+   - Add a CNAME record pointing to: `<username>.github.io`
+   
+   **For both apex and www:**
+   - Configure apex domain A records as above
+   - Add a CNAME record for `www` pointing to your apex domain
+
+3. **Enable HTTPS**: In repository **Settings** → **Pages**, check **Enforce HTTPS** (available after DNS propagation)
+
+4. **Verify**: DNS changes may take up to 24 hours to propagate. You can check the status in **Settings** → **Pages**
+
+For more information, see [GitHub's custom domain documentation](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+
 ## Contributing
 
 We welcome contributions! Please see the main [OJP repository](https://github.com/Open-J-Proxy/ojp) for contribution guidelines.
