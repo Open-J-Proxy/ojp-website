@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Open J Proxy - Our mission, vision, and the team behind the project">
+    <title>About - Open J Proxy</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/ojp-logo.png" alt="Open J Proxy Logo">
+                <span>Open J Proxy</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>About Open J Proxy</h1>
+            <p>Building the future of database connectivity for Java applications</p>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Mission</h2>
+            </div>
+            
+            <div class="feature-card">
+                <p style="font-size: 1.25rem; text-align: center; max-width: 900px; margin: 0 auto;">
+                    To empower developers and organizations to build scalable, reliable Java applications without the constraints of traditional database connection management. We believe in open source, freedom from vendor lock-in, and providing enterprise-grade solutions accessible to everyone.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>The Open J Proxy Story</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>The Problem</h3>
+                    <p>In modern cloud-native architectures, microservices need to scale elastically to handle varying loads. But traditional connection pooling creates a critical bottleneck: as services scale up, each instance maintains its own database connections, leading to connection storms that can overwhelm and crash database systems.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>The Genesis</h3>
+                    <p>Open J Proxy was born from real-world pain points experienced by teams building scalable Java applications. The project started as an internal solution to enable true elastic scaling while protecting critical database infrastructure.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>The Solution</h3>
+                    <p>By introducing a JDBC Type 3 architecture with server-side connection pooling, OJP decouples application scaling from database connection management. Applications can scale freely while the database sees a stable, controlled number of connections.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Values</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Open Source First</h3>
+                    <p>We believe in transparency, community collaboration, and giving back. Open J Proxy is 100% open source with no hidden features or artificial limitations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔓</div>
+                    <h3>Freedom & Portability</h3>
+                    <p>No vendor lock-in. No cloud-specific dependencies. OJP works everywhere: AWS, Azure, GCP, on-premises, or any infrastructure you choose.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Performance Matters</h3>
+                    <p>We obsess over performance. Built on proven technologies like HikariCP and gRPC, OJP delivers enterprise-grade performance with minimal overhead.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Reliability & Trust</h3>
+                    <p>Your database is critical infrastructure. We build OJP to protect it with circuit breakers, backpressure, and comprehensive monitoring.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Simplicity</h3>
+                    <p>Powerful doesn't mean complex. OJP requires zero code changes and minimal configuration. Get started in minutes, not months.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community Driven</h3>
+                    <p>We listen to users, welcome contributions, and build together. The best ideas come from those who use OJP every day.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technology & Architecture</h2>
+                <p>Built on proven, industry-leading technologies</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Core Technologies</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li><strong>Java:</strong> Enterprise-grade, battle-tested platform</li>
+                        <li><strong>HikariCP:</strong> The fastest connection pool for Java</li>
+                        <li><strong>gRPC:</strong> High-performance RPC framework</li>
+                        <li><strong>Protocol Buffers:</strong> Efficient serialization</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Architecture Principles</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li><strong>Type 3 JDBC:</strong> Client-server architecture</li>
+                        <li><strong>Centralized Pooling:</strong> Server-side control</li>
+                        <li><strong>Resilience Patterns:</strong> Circuit breakers, backpressure</li>
+                        <li><strong>Observability:</strong> Metrics and monitoring built-in</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Standards Compliance</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li><strong>JDBC API:</strong> Full compliance with JDBC specification</li>
+                        <li><strong>XA Transactions:</strong> JTA/XA standard support</li>
+                        <li><strong>SQL Standards:</strong> Works with standard SQL</li>
+                        <li><strong>Cloud Native:</strong> Containerized, scalable design</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Product Roadmap</h2>
+                <p>What's coming next for Open J Proxy</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>✅ Completed</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li>Core JDBC Type 3 implementation</li>
+                        <li>Multi-database support</li>
+                        <li>HikariCP integration</li>
+                        <li>Circuit breakers & backpressure</li>
+                        <li>XA transaction support</li>
+                        <li>Docker deployment</li>
+                        <li>gRPC API</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>🚧 In Progress</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li>Enhanced monitoring dashboard</li>
+                        <li>Prometheus metrics integration</li>
+                        <li>Advanced query analytics</li>
+                        <li>Multi-region support</li>
+                        <li>Kubernetes operator</li>
+                        <li>Performance optimizations</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>🔮 Planned</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li>Web-based management console</li>
+                        <li>Advanced load balancing</li>
+                        <li>Read/write splitting</li>
+                        <li>Connection encryption enhancements</li>
+                        <li>Additional language clients</li>
+                        <li>Cloud marketplace listings</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Source Section -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Open Source Commitment</h2>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Licensing</h3>
+                <p style="margin-top: 1rem;">Open J Proxy is released under an open source license that permits free use, modification, and distribution. We believe enterprise-grade tools should be accessible to everyone, from startups to Fortune 500 companies.</p>
+            </div>
+
+            <div class="features-grid mt-3">
+                <div class="feature-card">
+                    <h3>Contributing</h3>
+                    <p>We welcome contributions from the community! Whether it's code, documentation, bug reports, or feature suggestions, your input makes OJP better for everyone.</p>
+                    <a href="https://github.com/Open-J-Proxy/ojp" target="_blank" class="btn btn-blue" style="margin-top: 1rem;">Contribute on GitHub</a>
+                </div>
+                <div class="feature-card">
+                    <h3>Governance</h3>
+                    <p>Open J Proxy follows transparent, community-driven governance. Major decisions are made openly with input from contributors and users.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Support Model</h3>
+                    <p>Community support is available for all users. Enterprise support and consulting services are available for organizations requiring SLAs and dedicated assistance.</p>
+                    <a href="contact.html" class="btn btn-blue" style="margin-top: 1rem;">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Join Our Community</h2>
+                <p>Connect with other OJP users and contributors</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>GitHub</h3>
+                    <p>Star the project, report issues, submit pull requests, and access the complete source code.</p>
+                    <a href="https://github.com/Open-J-Proxy/ojp" target="_blank" class="btn btn-blue" style="margin-top: 1rem;">Visit GitHub</a>
+                </div>
+                <div class="feature-card">
+                    <h3>Discussions</h3>
+                    <p>Ask questions, share experiences, and help other users. Our community is friendly and welcoming.</p>
+                    <a href="https://github.com/Open-J-Proxy/ojp/discussions" target="_blank" class="btn btn-blue" style="margin-top: 1rem;">Join Discussion</a>
+                </div>
+                <div class="feature-card">
+                    <h3>Blog</h3>
+                    <p>Read about OJP features, best practices, architecture decisions, and success stories.</p>
+                    <a href="https://javapro.io" target="_blank" class="btn btn-blue" style="margin-top: 1rem;">Read Blog</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Want to Learn More?</h2>
+            <p>Get in touch with our team</p>
+            <div class="hero-buttons">
+                <a href="contact.html" class="btn btn-primary">Contact Us</a>
+                <a href="documentation.html" class="btn btn-secondary">Read Documentation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Open J Proxy</h4>
+                <p>The intelligent JDBC proxy for scalable Java applications.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="https://github.com/Open-J-Proxy/ojp" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="https://github.com/Open-J-Proxy/ojp" target="_blank">GitHub</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Open J Proxy. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

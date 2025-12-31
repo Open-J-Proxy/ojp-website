@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Open J Proxy Products - JDBC Driver and Server for enterprise-grade database connection management">
+    <title>Products - Open J Proxy</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/ojp-logo.png" alt="Open J Proxy Logo">
+                <span>Open J Proxy</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html" class="active">Products</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Open J Proxy Products</h1>
+            <p>Enterprise-grade database connection management for Java applications</p>
+        </div>
+    </section>
+
+    <!-- Main Product Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>OJP JDBC Driver</h2>
+                <p>The intelligent JDBC Type 3 driver that transforms your database connectivity</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>What is OJP JDBC Driver?</h3>
+                <p>The OJP JDBC Driver is a drop-in replacement for your existing JDBC driver that routes all database traffic through the Open J Proxy server. This architecture provides centralized connection pooling, intelligent load management, and protection against connection storms - all without changing a single line of your application code.</p>
+            </div>
+
+            <div class="features-grid mt-3">
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>JDBC Type 3 Architecture</h3>
+                    <p>Client-server architecture where the driver communicates with OJP server, which manages actual database connections. Decouples applications from direct database access.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Transparent Integration</h3>
+                    <p>Simply replace your database driver with OJP driver and update the JDBC URL. No code changes, no refactoring, no risk.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Full JDBC Compliance</h3>
+                    <p>Implements the standard JDBC API. Your applications work exactly as before, but with enhanced capabilities and protection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Server Product Section -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>OJP Server</h2>
+                <p>The Layer 7 proxy server that protects and optimizes your database</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏊</div>
+                    <h3>Central Connection Pool</h3>
+                    <p>Built on HikariCP, the fastest connection pool in Java. Server-side pooling means your database sees a controlled, predictable number of connections regardless of application scaling.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚦</div>
+                    <h3>Intelligent Traffic Management</h3>
+                    <p>Backpressure mechanisms prevent overwhelming the database. Circuit breakers automatically protect against cascading failures. Slow query segregation keeps your system responsive.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Scalability Engine</h3>
+                    <p>Enables true elastic scaling. Add or remove application instances without database connection concerns. The server handles all the complexity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Query Monitoring</h3>
+                    <p>Track every query, measure performance, identify bottlenecks. Built-in observability gives you insights into your database layer.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>XA Transaction Support</h3>
+                    <p>Full distributed transaction capabilities. Coordinate transactions across multiple resources with confidence and reliability.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🐳</div>
+                    <h3>Cloud-Native Deployment</h3>
+                    <p>Deploy as Docker container, Kubernetes pod, or standalone JAR. Fits seamlessly into modern infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Databases -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Supported Databases</h2>
+                <p>Works with all major database systems</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>PostgreSQL</h4>
+                    <p>Full support for PostgreSQL including advanced features and extensions</p>
+                </div>
+                <div class="feature-card">
+                    <h4>MySQL / MariaDB</h4>
+                    <p>Complete compatibility with MySQL and MariaDB clusters</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Oracle Database</h4>
+                    <p>Enterprise Oracle support including XA transactions</p>
+                </div>
+                <div class="feature-card">
+                    <h4>SQL Server</h4>
+                    <p>Microsoft SQL Server integration with full feature support</p>
+                </div>
+                <div class="feature-card">
+                    <h4>DB2</h4>
+                    <p>IBM DB2 compatibility for enterprise workloads</p>
+                </div>
+                <div class="feature-card">
+                    <h4>H2 Database</h4>
+                    <p>Perfect for development and testing environments</p>
+                </div>
+                <div class="feature-card">
+                    <h4>CockroachDB</h4>
+                    <p>Cloud-native distributed SQL support</p>
+                </div>
+                <div class="feature-card">
+                    <h4>And More...</h4>
+                    <p>Any JDBC-compliant database can work with OJP</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technical Specifications</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Driver Requirements</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Java 8 or higher</li>
+                        <li>Maven or Gradle</li>
+                        <li>Standard JDBC API support</li>
+                        <li>No additional dependencies</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Server Requirements</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>Java 11 or higher</li>
+                        <li>1GB RAM minimum (2GB+ recommended)</li>
+                        <li>Docker or standalone deployment</li>
+                        <li>Network access to database</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Communication Protocol</h3>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>gRPC for high performance</li>
+                        <li>Protocol Buffers serialization</li>
+                        <li>Language-neutral API</li>
+                        <li>TLS/SSL support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Open Source & Free</h2>
+                <p>100% open source with enterprise support available</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Community Edition</h3>
+                    <h2 class="text-blue">FREE</h2>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li>Full source code access</li>
+                        <li>All features included</li>
+                        <li>Community support</li>
+                        <li>GitHub issues</li>
+                        <li>Regular updates</li>
+                        <li>No restrictions</li>
+                    </ul>
+                    <a href="documentation.html" class="btn btn-blue" style="margin-top: 1.5rem;">Get Started</a>
+                </div>
+                <div class="feature-card">
+                    <h3>Enterprise Support</h3>
+                    <h2 class="text-blue">Contact Us</h2>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li>Priority support</li>
+                        <li>SLA guarantees</li>
+                        <li>Custom development</li>
+                        <li>Training sessions</li>
+                        <li>Architecture consulting</li>
+                        <li>24/7 assistance</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-blue" style="margin-top: 1.5rem;">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Get Started?</h2>
+            <p>Download and deploy Open J Proxy in minutes</p>
+            <div class="hero-buttons">
+                <a href="documentation.html" class="btn btn-primary">View Documentation</a>
+                <a href="https://github.com/Open-J-Proxy/ojp" class="btn btn-secondary" target="_blank">Download on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Open J Proxy</h4>
+                <p>The intelligent JDBC proxy for scalable Java applications.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="https://github.com/Open-J-Proxy/ojp" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="https://github.com/Open-J-Proxy/ojp" target="_blank">GitHub</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Open J Proxy. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

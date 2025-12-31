@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Open J Proxy Documentation - Getting started guide, installation, and configuration">
+    <title>Documentation - Open J Proxy</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="images/ojp-logo.png" alt="Open J Proxy Logo">
+                <span>Open J Proxy</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="documentation.html" class="active">Documentation</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Documentation</h1>
+            <p>Everything you need to get started with Open J Proxy</p>
+        </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Quick Start Guide</h2>
+                <p>Get up and running in 5 minutes</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Step 1: Start the OJP Server</h3>
+                <p>The easiest way to get started is using Docker:</p>
+                <div class="code-block">
+                    <code>docker run --rm -d --network host rrobetti/ojp:0.3.1-beta</code>
+                </div>
+                <p style="margin-top: 1rem;">For production deployments, you can also run as a standalone JAR or deploy to Kubernetes.</p>
+            </div>
+
+            <div class="feature-card mt-2">
+                <h3>Step 2: Add the OJP JDBC Driver</h3>
+                <p>For Maven projects, add this dependency to your pom.xml:</p>
+                <div class="code-block">
+                    <code>&lt;dependency&gt;<br>
+    &lt;groupId&gt;org.openjproxy&lt;/groupId&gt;<br>
+    &lt;artifactId&gt;ojp-jdbc-driver&lt;/artifactId&gt;<br>
+    &lt;version&gt;0.3.1-beta&lt;/version&gt;<br>
+&lt;/dependency&gt;</code>
+                </div>
+                <p style="margin-top: 1rem;">For Gradle projects:</p>
+                <div class="code-block">
+                    <code>implementation 'org.openjproxy:ojp-jdbc-driver:0.3.1-beta'</code>
+                </div>
+            </div>
+
+            <div class="feature-card mt-2">
+                <h3>Step 3: Update Your JDBC Configuration</h3>
+                <p>Update your database driver class:</p>
+                <div class="code-block">
+                    <code>org.openjproxy.jdbc.Driver</code>
+                </div>
+                <p style="margin-top: 1rem;">Update your JDBC URL by prefixing it with OJP connection info:</p>
+                <div class="code-block">
+                    <code>// PostgreSQL<br>
+jdbc:ojp[localhost:1059]_postgresql://user@localhost:5432/mydb<br><br>
+// MySQL<br>
+jdbc:ojp[localhost:1059]_mysql://localhost:3306/mydb<br><br>
+// Oracle<br>
+jdbc:ojp[localhost:1059]_oracle:thin:@localhost:1521/XEPDB1<br><br>
+// SQL Server<br>
+jdbc:ojp[localhost:1059]_sqlserver://localhost:1433;databaseName=mydb</code>
+                </div>
+            </div>
+
+            <div class="feature-card mt-2">
+                <h3>Step 4: Run Your Application</h3>
+                <p>That's it! Your application now benefits from:</p>
+                <ul style="margin-top: 1rem; padding-left: 2rem;">
+                    <li>Central connection pooling</li>
+                    <li>Protection from connection storms</li>
+                    <li>Circuit breakers and backpressure</li>
+                    <li>Query monitoring and observability</li>
+                    <li>Elastic scaling support</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Configuration -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Configuration</h2>
+                <p>Customize OJP for your environment</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Server Configuration</h3>
+                    <p>Configure the OJP server with environment variables or configuration files:</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li><strong>OJP_PORT:</strong> Server port (default: 1059)</li>
+                        <li><strong>OJP_MAX_CONNECTIONS:</strong> Max pool size</li>
+                        <li><strong>OJP_CONNECTION_TIMEOUT:</strong> Timeout in ms</li>
+                        <li><strong>OJP_IDLE_TIMEOUT:</strong> Idle timeout</li>
+                        <li><strong>OJP_LOG_LEVEL:</strong> Logging level</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Connection Pool Tuning</h3>
+                    <p>Fine-tune HikariCP pool settings for optimal performance:</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li>Maximum pool size</li>
+                        <li>Minimum idle connections</li>
+                        <li>Connection timeout</li>
+                        <li>Idle timeout</li>
+                        <li>Max lifetime</li>
+                        <li>Leak detection threshold</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Security Settings</h3>
+                    <p>Configure security and authentication:</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; text-align: left;">
+                        <li>TLS/SSL encryption</li>
+                        <li>Client authentication</li>
+                        <li>Database credentials</li>
+                        <li>Network security</li>
+                        <li>Access control</li>
+                        <li>Audit logging</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Framework Integration -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Framework Integration</h2>
+                <p>Works seamlessly with popular Java frameworks</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Spring Boot</h3>
+                    <p>Configure OJP in your application.properties:</p>
+                    <div class="code-block">
+                        <code>spring.datasource.driver-class-name=org.openjproxy.jdbc.Driver<br>
+spring.datasource.url=jdbc:ojp[localhost:1059]_postgresql://localhost:5432/mydb<br>
+spring.datasource.username=user<br>
+spring.datasource.password=password</code>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h3>Jakarta EE / Java EE</h3>
+                    <p>Configure data source in your application server:</p>
+                    <div class="code-block">
+                        <code>&lt;data-source&gt;<br>
+  &lt;driver&gt;org.openjproxy.jdbc.Driver&lt;/driver&gt;<br>
+  &lt;url&gt;jdbc:ojp[localhost:1059]_...&lt;/url&gt;<br>
+&lt;/data-source&gt;</code>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h3>Quarkus</h3>
+                    <p>Add OJP configuration to application.properties:</p>
+                    <div class="code-block">
+                        <code>quarkus.datasource.db-kind=postgresql<br>
+quarkus.datasource.jdbc.driver=org.openjproxy.jdbc.Driver<br>
+quarkus.datasource.jdbc.url=jdbc:ojp[localhost:1059]_...</code>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h3>Micronaut</h3>
+                    <p>Configure OJP in application.yml:</p>
+                    <div class="code-block">
+                        <code>datasources:<br>
+  default:<br>
+    driver-class-name: org.openjproxy.jdbc.Driver<br>
+    url: jdbc:ojp[localhost:1059]_...</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Topics -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Advanced Topics</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Distributed Transactions</h3>
+                    <p>OJP supports XA distributed transactions for coordinating across multiple resources. Configure XA data sources and use standard JTA transaction managers.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Monitoring & Observability</h3>
+                    <p>Built-in metrics, query tracking, and performance monitoring. Integrate with Prometheus, Grafana, or your monitoring stack.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>High Availability</h3>
+                    <p>Deploy multiple OJP server instances for high availability. Load balance connections and handle failover automatically.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Multi-Language Support</h3>
+                    <p>Use the gRPC API to access OJP from non-Java languages. Protocol Buffers definitions available on GitHub.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Database Failover</h3>
+                    <p>Configure primary and replica databases. Automatic failover to replica in case of primary failure.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Performance Tuning</h3>
+                    <p>Optimize connection pool sizes, query timeouts, and resource allocation based on your workload patterns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Additional Resources</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📚 GitHub Repository</h3>
+                    <p>Access source code, examples, and contribute to the project</p>
+                    <a href="https://github.com/Open-J-Proxy/ojp" target="_blank" class="btn btn-blue" style="margin-top: 1rem;">View on GitHub</a>
+                </div>
+                <div class="feature-card">
+                    <h3>🎥 Video Tutorial</h3>
+                    <p>Watch the founder explain OJP architecture and benefits</p>
+                    <a href="https://www.youtube.com/watch?v=JrpT3lghlw4" target="_blank" class="btn btn-blue" style="margin-top: 1rem;">Watch on YouTube</a>
+                </div>
+                <div class="feature-card">
+                    <h3>📝 Blog Posts</h3>
+                    <p>Deep dive articles about OJP features and use cases</p>
+                    <a href="https://javapro.io" target="_blank" class="btn btn-blue" style="margin-top: 1rem;">Read Blog</a>
+                </div>
+                <div class="feature-card">
+                    <h3>💬 Community Support</h3>
+                    <p>Get help from the community and contribute your knowledge</p>
+                    <a href="https://github.com/Open-J-Proxy/ojp/issues" target="_blank" class="btn btn-blue" style="margin-top: 1rem;">Join Discussion</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Need Help Getting Started?</h2>
+            <p>Our team is here to assist you</p>
+            <div class="hero-buttons">
+                <a href="contact.html" class="btn btn-primary">Contact Support</a>
+                <a href="https://github.com/Open-J-Proxy/ojp/issues" class="btn btn-secondary" target="_blank">Report an Issue</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Open J Proxy</h4>
+                <p>The intelligent JDBC proxy for scalable Java applications.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="https://github.com/Open-J-Proxy/ojp" target="_blank">GitHub</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="https://github.com/Open-J-Proxy/ojp" target="_blank">GitHub</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Open J Proxy. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
