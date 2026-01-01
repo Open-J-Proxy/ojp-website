@@ -583,6 +583,15 @@ footer {
         grid-template-columns: 1fr;
     }
     
+    /* Reduce horizontal padding on sections and containers for phones */
+    .section {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .container {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+    
     /* Reduce horizontal padding on feature cards for phones */
     .feature-card {
         padding: var(--spacing-md) var(--spacing-sm);
