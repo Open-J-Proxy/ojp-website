@@ -492,19 +492,8 @@ footer {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    h1 {
-        font-size: 2rem;
-    }
-    
-    h2 {
-        font-size: 1.75rem;
-    }
-    
+/* Tablet and below - show burger menu */
+@media (max-width: 1024px) {
     .header-container {
         flex-direction: row;
         justify-content: space-between;
@@ -555,14 +544,6 @@ footer {
         border-radius: 0;
     }
     
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .stats-container {
-        grid-template-columns: 1fr;
-    }
-    
     /* Overlay for mobile menu */
     .menu-overlay {
         display: none;
@@ -577,6 +558,34 @@ footer {
     
     .menu-overlay.active {
         display: block;
+    }
+}
+
+/* Mobile phones and small tablets */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Reduce horizontal padding on feature cards for phones */
+    .feature-card {
+        padding: var(--spacing-md) var(--spacing-sm);
     }
 }
 
