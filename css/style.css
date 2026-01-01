@@ -55,6 +55,8 @@ body {
     line-height: 1.6;
     color: var(--darker-gray);
     background-color: var(--white);
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Typography */
@@ -267,6 +269,8 @@ nav a.active {
     border-radius: 8px;
     box-shadow: var(--shadow-md);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .feature-card:hover {
@@ -330,11 +334,14 @@ nav a.active {
     font-family: var(--font-mono);
     overflow-x: auto;
     margin: var(--spacing-md) 0;
+    max-width: 100%;
 }
 
 .code-block code {
     font-size: 0.9rem;
     line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 /* Trust Signals */
