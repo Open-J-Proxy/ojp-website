@@ -1,7 +1,14 @@
 // Open J Proxy Website - Main JavaScript
 
 // Mobile menu toggle functionality
+let mobileMenuInitialized = false;
+
 function initMobileMenu() {
+    // Prevent re-initialization
+    if (mobileMenuInitialized) {
+        return;
+    }
+    
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const nav = document.querySelector('nav');
     const menuOverlay = document.querySelector('.menu-overlay');
@@ -46,6 +53,9 @@ function initMobileMenu() {
     menuLinks.forEach(link => {
         link.addEventListener('click', closeMenu);
     });
+    
+    // Mark as initialized
+    mobileMenuInitialized = true;
 }
 
 // Smooth scroll for anchor links
@@ -97,9 +107,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initSmoothScroll();
     initScrollAnimations();
-});
-
-// Handle window resize
-window.addEventListener('resize', () => {
-    initMobileMenu();
 });
