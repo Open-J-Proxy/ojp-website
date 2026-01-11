@@ -7,7 +7,7 @@ Official website for Open J Proxy - The intelligent JDBC proxy for scalable Java
 <a href="https://meterian.io" target="_blank" >
    <img src="https://meterian.io/images/brand/badge-light.svg"
         alt="Meterian Security Scanner"
-        style="width:550px"
+        style="max-width: 100%; width: 550px;"
    />
 </a>
 
