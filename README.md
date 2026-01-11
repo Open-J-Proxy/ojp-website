@@ -2,6 +2,16 @@
 
 Official website for Open J Proxy - The intelligent JDBC proxy for scalable Java applications.
 
+## Security
+
+<a href="https://meterian.io" target="_blank">
+   <img src="https://meterian.io/images/brand/badge-light.svg"
+        alt="Meterian Security Scanner"
+        style="max-width: 100%; width: 550px; height: auto;">
+</a>
+
+*We use Meterian to continuously scan OJP source code for vulnerabilities in our code and open source libraries.*
+
 ## About Open J Proxy
 
 Open J Proxy (OJP) is an open-source Java project that acts as a JDBC Type 3 driver and Layer 7 proxy server. It helps decouple Java applications from direct database connection management, enabling:
