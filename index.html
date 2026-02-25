@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Open J Proxy - The intelligent JDBC proxy for scalable, reliable Java applications. Protect your database from connection storms and scale with confidence.">
-    <meta name="keywords" content="JDBC proxy, Java database, connection pooling, microservices, database scalability, Open J Proxy">
+    <meta name="description" content="Open J Proxy - The first open source Type 3 JDBC driver and database proxy. Boost performance, resiliency, and run a smaller database with built-in backpressure. Cloud agnostic, Apache 2.0 licensed.">
+    <meta name="keywords" content="JDBC proxy, Java database, connection pooling, microservices, database scalability, Open J Proxy, Type 3 JDBC, client-side load balancing, database failover, Apache 2.0, cloud agnostic">
     <title>Open J Proxy - Intelligent JDBC Proxy for Java Applications</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -39,7 +39,7 @@
     <section class="hero">
         <div class="hero-container">
             <h1>Scale Your Java Apps Without Database Risk</h1>
-            <p>Open J Proxy is the intelligent JDBC Type 3 driver and Layer 7 proxy that protects your database from connection storms while enabling elastic scaling for microservices and cloud-native applications.</p>
+            <p>Open J Proxy is the <strong>first open source Type 3 JDBC driver</strong> and database proxy that increases performance and resiliency, enables you to run a smaller database, and delivers client-side load balancing &amp; failover — no external load balancer required. Cloud agnostic, Apache 2.0 licensed.</p>
             <div class="hero-buttons">
                 <a href="documentation.html" class="btn btn-primary">Get Started</a>
                 <a href="products.html" class="btn btn-secondary">Learn More</a>
@@ -54,7 +54,7 @@
             <div class="trust-badges">
                 <div class="trust-badge">
                     <span class="trust-badge-icon">✓</span>
-                    <span>Open Source</span>
+                    <span>Apache 2.0 Licensed</span>
                 </div>
                 <div class="trust-badge">
                     <span class="trust-badge-icon">✓</span>
@@ -72,12 +72,39 @@
         </div>
     </section>
 
+    <!-- Why a Database Proxy Section -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Use a Database Proxy?</h2>
+                <p>A proxy layer between your applications and database unlocks significant operational advantages</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Better Performance &amp; Resiliency</h3>
+                    <p>A database proxy centralises connection pooling and traffic management, reducing connection overhead and latency. It also acts as a resilience layer — isolating application instances from database failures and preventing cascading outages, so your application stays responsive under pressure.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Run a Smaller Database</h3>
+                    <p>OJP's built-in backpressure mechanism absorbs traffic spikes by queuing requests intelligently rather than forwarding every burst directly to the database. In most use cases this means you can right-size — and therefore reduce the cost of — your database instance without sacrificing reliability.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>Works With Any JDBC Database</h3>
+                    <p>OJP supports every database that provides a standard JDBC driver — PostgreSQL, MySQL, Oracle, SQL Server, MariaDB, DB2, H2, CockroachDB, and beyond. If a JDBC driver exists for your database, OJP works with it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section -->
     <section class="section section-light">
         <div class="container">
             <div class="section-title">
                 <h2>Why Open J Proxy?</h2>
-                <p>Solve the scalability problem that breaks microservices at scale</p>
+                <p>OJP goes further than traditional database proxies — delivering unique capabilities no other open source solution provides</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
@@ -102,8 +129,8 @@
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🌐</div>
-                    <h3>Multi-Database</h3>
-                    <p>Works with PostgreSQL, MySQL, Oracle, SQL Server, MariaDB, DB2, H2, CockroachDB, and more.</p>
+                    <h3>Any JDBC-Compatible Database</h3>
+                    <p>Works with every database that offers a JDBC driver — PostgreSQL, MySQL, Oracle, SQL Server, MariaDB, DB2, H2, CockroachDB, and more. One proxy for your entire database estate.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
@@ -119,6 +146,11 @@
                     <div class="feature-icon">🌍</div>
                     <h3>Cloud Agnostic</h3>
                     <p>Works across any cloud provider. Not locked into vendor-specific solutions. True freedom.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚖️</div>
+                    <h3>First Open Source Type 3 JDBC Driver</h3>
+                    <p>OJP delivers the first open source Type 3 JDBC driver with native <strong>client-side load balancing and automatic failover</strong>. Traditional database proxies require an additional external load balancer; OJP handles it natively — reducing infrastructure complexity and cost.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔧</div>
@@ -146,8 +178,8 @@
                     <span class="stat-label">Code Changes</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Open Source</span>
+                    <span class="stat-number">Apache 2.0</span>
+                    <span class="stat-label">Open Source License</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">24/7</span>
