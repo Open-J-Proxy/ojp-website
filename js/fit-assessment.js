@@ -98,7 +98,7 @@ const resultCategories = [
         min: 0,
         max: 8,
         label: 'OJP likely unnecessary for this system',
-        emoji: '🟢',
+        emoji: '🔴',
         explanation: 'Your database architecture appears straightforward and well-controlled. OJP may not add significant value at this stage, but it is worth revisiting as your system grows.',
         capabilities: []
     },
@@ -106,7 +106,7 @@ const resultCategories = [
         min: 9,
         max: 16,
         label: 'OJP may provide benefits',
-        emoji: '🟡',
+        emoji: '🟠',
         explanation: 'Your system shows some signs that a database proxy could help. OJP could provide value in areas such as:',
         capabilities: [
             'Centralized connection pooling to reduce connection overhead',
@@ -118,7 +118,7 @@ const resultCategories = [
         min: 17,
         max: 24,
         label: 'OJP is likely beneficial',
-        emoji: '🟠',
+        emoji: '🟡',
         explanation: 'Your database architecture shows clear signs that a proxy layer would help. OJP can address your challenges with:',
         capabilities: [
             'Centralized connection pooling across all services',
@@ -132,7 +132,7 @@ const resultCategories = [
         min: 25,
         max: Infinity,
         label: 'OJP strongly recommended',
-        emoji: '🔴',
+        emoji: '🟢',
         explanation: 'Your system is a strong candidate for OJP. The identified challenges are exactly what OJP is designed to solve:',
         capabilities: [
             'Centralized connection pooling to eliminate connection storms',
@@ -146,9 +146,16 @@ const resultCategories = [
     }
 ];
 
+const EAGER_RESULT_DELAY_MS = 400;
+
 let answers = {};
 
 function getResultCategory(score) {
+    // If any question was answered with option D (score 3), OJP is strongly recommended
+    const hasUrgentAnswer = Object.values(answers).some(s => s === 3);
+    if (hasUrgentAnswer) {
+        return resultCategories[resultCategories.length - 1];
+    }
     return resultCategories.find(cat => score >= cat.min && score <= cat.max);
 }
 
@@ -192,10 +199,16 @@ function renderQuestion(index) {
     container.querySelectorAll('.assessment-option').forEach(label => {
         label.addEventListener('click', () => {
             const input = label.querySelector('input[type="radio"]');
-            answers[question.id] = parseInt(input.value, 10);
+            const selectedScore = parseInt(input.value, 10);
+            answers[question.id] = selectedScore;
             container.querySelectorAll('.assessment-option').forEach(l => l.classList.remove('selected'));
             label.classList.add('selected');
             document.getElementById('next-btn').disabled = false;
+            // If option D (highest score) is selected, eagerly navigate to results
+            if (selectedScore === 3) {
+                document.getElementById('next-btn').disabled = true;
+                setTimeout(() => renderResult(), EAGER_RESULT_DELAY_MS);
+            }
         });
     });
 
@@ -231,7 +244,6 @@ function renderResult() {
         <div class="assessment-result">
             <div class="assessment-result-score">
                 <span class="assessment-result-emoji">${category.emoji}</span>
-                <span class="assessment-result-number">Score: ${score} / ${questions.length * 3}</span>
             </div>
             <h3 class="assessment-result-label">${category.label}</h3>
             <p class="assessment-result-explanation">${category.explanation}</p>
