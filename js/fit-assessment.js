@@ -183,9 +183,9 @@ function renderQuestion(index) {
             </div>
         </div>
         <div class="assessment-navigation">
-            ${index > 0 ? `<button class="btn btn-blue assessment-btn" id="prev-btn">← Previous</button>` : '<span></span>'}
+            ${index > 0 ? `<button class="btn btn-blue assessment-btn" id="prev-btn"><span class="btn-text">← Previous</span><span class="btn-symbol" aria-hidden="true">←</span></button>` : '<span></span>'}
             <button class="btn btn-blue assessment-btn" id="next-btn" ${answers[question.id] === undefined ? 'disabled' : ''}>
-                ${index < questions.length - 1 ? 'Next →' : 'See Results'}
+                ${index < questions.length - 1 ? '<span class="btn-text">Next →</span><span class="btn-symbol" aria-hidden="true">→</span>' : '<span class="btn-text">See Results</span><span class="btn-symbol" aria-hidden="true">✓</span>'}
             </button>
         </div>
     `;

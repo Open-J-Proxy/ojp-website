@@ -774,6 +774,10 @@ footer {
     min-width: 140px;
 }
 
+.assessment-btn .btn-symbol {
+    display: none;
+}
+
 .assessment-btn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
@@ -782,6 +786,22 @@ footer {
 .assessment-btn:disabled:hover {
     background-color: var(--primary-blue);
     color: var(--white);
+}
+
+/* Assessment nav: show symbol only on phones */
+@media (max-width: 768px) {
+    .assessment-btn {
+        min-width: unset;
+        padding: 0.75rem 1.25rem;
+    }
+
+    .assessment-btn .btn-text {
+        display: none;
+    }
+
+    .assessment-btn .btn-symbol {
+        display: inline;
+    }
 }
 
 /* Assessment Result */
