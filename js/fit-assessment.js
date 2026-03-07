@@ -96,15 +96,15 @@ const questions = [
 const resultCategories = [
     {
         min: 0,
-        max: 24,
+        max: 8,
         label: 'OJP likely unnecessary for this system',
         emoji: '🔴',
         explanation: 'Your database architecture appears straightforward and well-controlled. OJP may not add significant value at this stage, but it is worth revisiting as your system grows.',
         capabilities: []
     },
     {
-        min: 25,
-        max: 48,
+        min: 9,
+        max: 16,
         label: 'OJP may provide benefits',
         emoji: '🟠',
         explanation: 'Your system shows some signs that a database proxy could help. OJP could provide value in areas such as:',
@@ -115,8 +115,8 @@ const resultCategories = [
         ]
     },
     {
-        min: 49,
-        max: 72,
+        min: 17,
+        max: 24,
         label: 'OJP is likely beneficial',
         emoji: '🟡',
         explanation: 'Your database architecture shows clear signs that a proxy layer would help. OJP can address your challenges with:',
@@ -129,7 +129,7 @@ const resultCategories = [
         ]
     },
     {
-        min: 73,
+        min: 25,
         max: Infinity,
         label: 'OJP strongly recommended',
         emoji: '🟢',
