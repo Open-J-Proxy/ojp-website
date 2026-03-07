@@ -7,8 +7,8 @@ const questions = [
         options: [
             { text: 'One monolithic application', score: 0 },
             { text: 'A few services', score: 1 },
-            { text: 'Many microservices', score: 2 },
-            { text: 'Serverless or highly elastic consumers', score: 3 }
+            { text: 'Many microservices', score: 4 },
+            { text: 'Serverless or highly elastic consumers', score: 9 }
         ]
     },
     {
@@ -17,8 +17,8 @@ const questions = [
         options: [
             { text: 'Never', score: 0 },
             { text: 'Occasionally', score: 1 },
-            { text: 'Frequently', score: 2 },
-            { text: 'Severe during bursts', score: 3 }
+            { text: 'Frequently', score: 4 },
+            { text: 'Severe during bursts', score: 9 }
         ]
     },
     {
@@ -27,8 +27,8 @@ const questions = [
         options: [
             { text: 'Never', score: 0 },
             { text: 'Rarely', score: 1 },
-            { text: 'Sometimes', score: 2 },
-            { text: 'Frequently', score: 3 }
+            { text: 'Sometimes', score: 4 },
+            { text: 'Frequently', score: 9 }
         ]
     },
     {
@@ -37,8 +37,8 @@ const questions = [
         options: [
             { text: 'Not a concern', score: 0 },
             { text: 'Slightly', score: 1 },
-            { text: 'Yes, they grow quickly', score: 2 },
-            { text: 'Connection storms occur', score: 3 }
+            { text: 'Yes, they grow quickly', score: 4 },
+            { text: 'Connection storms occur', score: 9 }
         ]
     },
     {
@@ -47,8 +47,8 @@ const questions = [
         options: [
             { text: 'No', score: 0 },
             { text: 'Possibly in future', score: 1 },
-            { text: 'Multiple databases today', score: 2 },
-            { text: 'Portability is important', score: 3 }
+            { text: 'Multiple databases today', score: 4 },
+            { text: 'Portability is important', score: 9 }
         ]
     },
     {
@@ -57,8 +57,8 @@ const questions = [
         options: [
             { text: 'No', score: 0 },
             { text: 'Rarely', score: 1 },
-            { text: 'Occasionally', score: 2 },
-            { text: 'Frequently', score: 3 }
+            { text: 'Occasionally', score: 4 },
+            { text: 'Frequently', score: 9 }
         ]
     },
     {
@@ -67,8 +67,8 @@ const questions = [
         options: [
             { text: 'Monitoring is sufficient', score: 0 },
             { text: 'Some gaps', score: 1 },
-            { text: 'Hard to diagnose issues', score: 2 },
-            { text: 'Very limited insight', score: 3 }
+            { text: 'Hard to diagnose issues', score: 4 },
+            { text: 'Very limited insight', score: 9 }
         ]
     },
     {
@@ -77,8 +77,8 @@ const questions = [
         options: [
             { text: 'No', score: 0 },
             { text: 'Possibly', score: 1 },
-            { text: 'Yes somewhat', score: 2 },
-            { text: 'Significantly overprovisioned', score: 3 }
+            { text: 'Yes somewhat', score: 4 },
+            { text: 'Significantly overprovisioned', score: 9 }
         ]
     },
     {
@@ -87,8 +87,8 @@ const questions = [
         options: [
             { text: 'No', score: 0 },
             { text: 'Limited scaling', score: 1 },
-            { text: 'Moderate scaling', score: 2 },
-            { text: 'Highly elastic workloads', score: 3 }
+            { text: 'Moderate scaling', score: 4 },
+            { text: 'Highly elastic workloads', score: 9 }
         ]
     }
 ];
@@ -96,15 +96,15 @@ const questions = [
 const resultCategories = [
     {
         min: 0,
-        max: 8,
+        max: 24,
         label: 'OJP likely unnecessary for this system',
         emoji: '🔴',
         explanation: 'Your database architecture appears straightforward and well-controlled. OJP may not add significant value at this stage, but it is worth revisiting as your system grows.',
         capabilities: []
     },
     {
-        min: 9,
-        max: 16,
+        min: 25,
+        max: 48,
         label: 'OJP may provide benefits',
         emoji: '🟠',
         explanation: 'Your system shows some signs that a database proxy could help. OJP could provide value in areas such as:',
@@ -115,8 +115,8 @@ const resultCategories = [
         ]
     },
     {
-        min: 17,
-        max: 24,
+        min: 49,
+        max: 72,
         label: 'OJP is likely beneficial',
         emoji: '🟡',
         explanation: 'Your database architecture shows clear signs that a proxy layer would help. OJP can address your challenges with:',
@@ -129,7 +129,7 @@ const resultCategories = [
         ]
     },
     {
-        min: 25,
+        min: 73,
         max: Infinity,
         label: 'OJP strongly recommended',
         emoji: '🟢',
@@ -147,6 +147,8 @@ const resultCategories = [
 ];
 
 let answers = {};
+
+const maxScore = questions.reduce((sum, q) => sum + Math.max(...q.options.map(o => o.score)), 0);
 
 function getResultCategory(score) {
     return resultCategories.find(cat => score >= cat.min && score <= cat.max);
@@ -219,7 +221,6 @@ function renderQuestion(index) {
 
 function renderResult() {
     const score = calculateScore();
-    const maxScore = questions.length * 3;
     const category = getResultCategory(score);
     const container = document.getElementById('assessment-container');
 
