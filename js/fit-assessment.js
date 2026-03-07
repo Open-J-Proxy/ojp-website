@@ -146,8 +146,6 @@ const resultCategories = [
     }
 ];
 
-const EAGER_RESULT_DELAY_MS = 400;
-
 let answers = {};
 
 function getResultCategory(score) {
@@ -210,11 +208,6 @@ function renderQuestion(index) {
             container.querySelectorAll('.assessment-option').forEach(l => l.classList.remove('selected'));
             label.classList.add('selected');
             document.getElementById('next-btn').disabled = false;
-            // If option D (highest score) is selected, eagerly navigate to results
-            if (selectedScore === 3) {
-                document.getElementById('next-btn').disabled = true;
-                setTimeout(() => renderResult(), EAGER_RESULT_DELAY_MS);
-            }
         });
     });
 
