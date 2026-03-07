@@ -230,30 +230,14 @@ function renderResult() {
            </ul>`
         : '';
 
-    const rangesHtml = resultCategories.map(cat => {
-        const rangeLabel = cat.max === Infinity ? `${cat.min}–${maxScore}` : `${cat.min}–${cat.max}`;
-        const isCurrent = cat === category;
-        return `<li class="assessment-score-range${isCurrent ? ' assessment-score-range--current' : ''}">
-            <span class="assessment-score-range-emoji">${cat.emoji}</span>
-            <span class="assessment-score-range-label">${rangeLabel} — ${cat.label}</span>
-        </li>`;
-    }).join('');
-
     container.innerHTML = `
         <div class="assessment-result">
             <div class="assessment-result-score">
                 <span class="assessment-result-emoji">${category.emoji}</span>
             </div>
             <h3 class="assessment-result-label">${category.label}</h3>
-            <p class="assessment-result-score-value">Your score: <strong>${score} / ${maxScore}</strong></p>
             <p class="assessment-result-explanation">${category.explanation}</p>
             ${capabilitiesHtml}
-            <div class="assessment-score-ranges">
-                <h4 class="assessment-score-ranges-title">Score ranges</h4>
-                <ul class="assessment-score-ranges-list">
-                    ${rangesHtml}
-                </ul>
-            </div>
             <div class="assessment-result-actions">
                 <button class="btn btn-blue assessment-btn" id="restart-btn">Retake Assessment</button>
                 <a href="documentation.html" class="btn btn-blue assessment-btn">Get Started with OJP</a>
