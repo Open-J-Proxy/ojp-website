@@ -151,10 +151,16 @@ const EAGER_RESULT_DELAY_MS = 400;
 let answers = {};
 
 function getResultCategory(score) {
-    // If any question was answered with option D (score 3), OJP is strongly recommended
-    const hasUrgentAnswer = Object.values(answers).some(s => s === 3);
-    if (hasUrgentAnswer) {
+    const dCount = Object.values(answers).filter(s => s === 3).length;
+    const cCount = Object.values(answers).filter(s => s === 2).length;
+    // 2 or more D answers, or 1 D combined with 2 or more C answers → strongly recommended
+    if (dCount >= 2 || (dCount === 1 && cCount >= 2)) {
         return resultCategories[resultCategories.length - 1];
+    }
+    // Exactly 1 D answer with fewer than 2 C answers → likely beneficial
+    // (the 1D + 2+C case is already handled above, so cCount < 2 is implicit here)
+    if (dCount === 1) {
+        return resultCategories[resultCategories.length - 2];
     }
     return resultCategories.find(cat => score >= cat.min && score <= cat.max);
 }
