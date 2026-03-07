@@ -149,17 +149,6 @@ const resultCategories = [
 let answers = {};
 
 function getResultCategory(score) {
-    const dCount = Object.values(answers).filter(s => s === 3).length;
-    const cCount = Object.values(answers).filter(s => s === 2).length;
-    // 2 or more D answers, or 1 D combined with 2 or more C answers → strongly recommended
-    if (dCount >= 2 || (dCount === 1 && cCount >= 2)) {
-        return resultCategories[resultCategories.length - 1];
-    }
-    // Exactly 1 D answer with fewer than 2 C answers → likely beneficial
-    // (the 1D + 2+C case is already handled above, so cCount < 2 is implicit here)
-    if (dCount === 1) {
-        return resultCategories[resultCategories.length - 2];
-    }
     return resultCategories.find(cat => score >= cat.min && score <= cat.max);
 }
 
@@ -230,6 +219,7 @@ function renderQuestion(index) {
 
 function renderResult() {
     const score = calculateScore();
+    const maxScore = questions.length * 3;
     const category = getResultCategory(score);
     const container = document.getElementById('assessment-container');
 
@@ -239,14 +229,30 @@ function renderResult() {
            </ul>`
         : '';
 
+    const rangesHtml = resultCategories.map(cat => {
+        const rangeLabel = cat.max === Infinity ? `${cat.min}–${maxScore}` : `${cat.min}–${cat.max}`;
+        const isCurrent = cat === category;
+        return `<li class="assessment-score-range${isCurrent ? ' assessment-score-range--current' : ''}">
+            <span class="assessment-score-range-emoji">${cat.emoji}</span>
+            <span class="assessment-score-range-label">${rangeLabel} — ${cat.label}</span>
+        </li>`;
+    }).join('');
+
     container.innerHTML = `
         <div class="assessment-result">
             <div class="assessment-result-score">
                 <span class="assessment-result-emoji">${category.emoji}</span>
             </div>
             <h3 class="assessment-result-label">${category.label}</h3>
+            <p class="assessment-result-score-value">Your score: <strong>${score} / ${maxScore}</strong></p>
             <p class="assessment-result-explanation">${category.explanation}</p>
             ${capabilitiesHtml}
+            <div class="assessment-score-ranges">
+                <h4 class="assessment-score-ranges-title">Score ranges</h4>
+                <ul class="assessment-score-ranges-list">
+                    ${rangesHtml}
+                </ul>
+            </div>
             <div class="assessment-result-actions">
                 <button class="btn btn-blue assessment-btn" id="restart-btn">Retake Assessment</button>
                 <a href="documentation.html" class="btn btn-blue assessment-btn">Get Started with OJP</a>
