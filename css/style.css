@@ -832,7 +832,49 @@ footer {
     line-height: 1.5;
 }
 
-.assessment-result-actions {
+.assessment-result-score-value {
+    font-size: 1rem;
+    color: var(--gray);
+    margin-bottom: var(--spacing-sm);
+}
+
+.assessment-score-ranges {
+    margin: var(--spacing-md) 0;
+    text-align: left;
+}
+
+.assessment-score-ranges-title {
+    font-size: 1rem;
+    color: var(--dark-gray);
+    margin-bottom: var(--spacing-xs);
+}
+
+.assessment-score-ranges-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.assessment-score-range {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+}
+
+.assessment-score-range--current {
+    background: #f0f7ff;
+    font-weight: 600;
+}
+
+.assessment-score-range-emoji {
+    font-size: 1rem;
+}
+
+
     display: flex;
     gap: var(--spacing-sm);
     justify-content: center;

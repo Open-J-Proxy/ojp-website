@@ -7,8 +7,8 @@ const questions = [
         options: [
             { text: 'One monolithic application', score: 0 },
             { text: 'A few services', score: 1 },
-            { text: 'Many microservices', score: 2 },
-            { text: 'Serverless or highly elastic consumers', score: 3 }
+            { text: 'Many microservices', score: 4 },
+            { text: 'Serverless or highly elastic consumers', score: 9 }
         ]
     },
     {
@@ -17,8 +17,8 @@ const questions = [
         options: [
             { text: 'Never', score: 0 },
             { text: 'Occasionally', score: 1 },
-            { text: 'Frequently', score: 2 },
-            { text: 'Severe during bursts', score: 3 }
+            { text: 'Frequently', score: 4 },
+            { text: 'Severe during bursts', score: 9 }
         ]
     },
     {
@@ -27,8 +27,8 @@ const questions = [
         options: [
             { text: 'Never', score: 0 },
             { text: 'Rarely', score: 1 },
-            { text: 'Sometimes', score: 2 },
-            { text: 'Frequently', score: 3 }
+            { text: 'Sometimes', score: 4 },
+            { text: 'Frequently', score: 9 }
         ]
     },
     {
@@ -37,8 +37,8 @@ const questions = [
         options: [
             { text: 'Not a concern', score: 0 },
             { text: 'Slightly', score: 1 },
-            { text: 'Yes, they grow quickly', score: 2 },
-            { text: 'Connection storms occur', score: 3 }
+            { text: 'Yes, they grow quickly', score: 4 },
+            { text: 'Connection storms occur', score: 9 }
         ]
     },
     {
@@ -47,8 +47,8 @@ const questions = [
         options: [
             { text: 'No', score: 0 },
             { text: 'Possibly in future', score: 1 },
-            { text: 'Multiple databases today', score: 2 },
-            { text: 'Portability is important', score: 3 }
+            { text: 'Multiple databases today', score: 4 },
+            { text: 'Portability is important', score: 9 }
         ]
     },
     {
@@ -57,8 +57,8 @@ const questions = [
         options: [
             { text: 'No', score: 0 },
             { text: 'Rarely', score: 1 },
-            { text: 'Occasionally', score: 2 },
-            { text: 'Frequently', score: 3 }
+            { text: 'Occasionally', score: 4 },
+            { text: 'Frequently', score: 9 }
         ]
     },
     {
@@ -67,8 +67,8 @@ const questions = [
         options: [
             { text: 'Monitoring is sufficient', score: 0 },
             { text: 'Some gaps', score: 1 },
-            { text: 'Hard to diagnose issues', score: 2 },
-            { text: 'Very limited insight', score: 3 }
+            { text: 'Hard to diagnose issues', score: 4 },
+            { text: 'Very limited insight', score: 9 }
         ]
     },
     {
@@ -77,8 +77,8 @@ const questions = [
         options: [
             { text: 'No', score: 0 },
             { text: 'Possibly', score: 1 },
-            { text: 'Yes somewhat', score: 2 },
-            { text: 'Significantly overprovisioned', score: 3 }
+            { text: 'Yes somewhat', score: 4 },
+            { text: 'Significantly overprovisioned', score: 9 }
         ]
     },
     {
@@ -87,8 +87,8 @@ const questions = [
         options: [
             { text: 'No', score: 0 },
             { text: 'Limited scaling', score: 1 },
-            { text: 'Moderate scaling', score: 2 },
-            { text: 'Highly elastic workloads', score: 3 }
+            { text: 'Moderate scaling', score: 4 },
+            { text: 'Highly elastic workloads', score: 9 }
         ]
     }
 ];
@@ -148,18 +148,9 @@ const resultCategories = [
 
 let answers = {};
 
+const maxScore = questions.reduce((sum, q) => sum + Math.max(...q.options.map(o => o.score)), 0);
+
 function getResultCategory(score) {
-    const dCount = Object.values(answers).filter(s => s === 3).length;
-    const cCount = Object.values(answers).filter(s => s === 2).length;
-    // 2 or more D answers, or 1 D combined with 2 or more C answers → strongly recommended
-    if (dCount >= 2 || (dCount === 1 && cCount >= 2)) {
-        return resultCategories[resultCategories.length - 1];
-    }
-    // Exactly 1 D answer with fewer than 2 C answers → likely beneficial
-    // (the 1D + 2+C case is already handled above, so cCount < 2 is implicit here)
-    if (dCount === 1) {
-        return resultCategories[resultCategories.length - 2];
-    }
     return resultCategories.find(cat => score >= cat.min && score <= cat.max);
 }
 
@@ -239,14 +230,30 @@ function renderResult() {
            </ul>`
         : '';
 
+    const rangesHtml = resultCategories.map(cat => {
+        const rangeLabel = cat.max === Infinity ? `${cat.min}–${maxScore}` : `${cat.min}–${cat.max}`;
+        const isCurrent = cat === category;
+        return `<li class="assessment-score-range${isCurrent ? ' assessment-score-range--current' : ''}">
+            <span class="assessment-score-range-emoji">${cat.emoji}</span>
+            <span class="assessment-score-range-label">${rangeLabel} — ${cat.label}</span>
+        </li>`;
+    }).join('');
+
     container.innerHTML = `
         <div class="assessment-result">
             <div class="assessment-result-score">
                 <span class="assessment-result-emoji">${category.emoji}</span>
             </div>
             <h3 class="assessment-result-label">${category.label}</h3>
+            <p class="assessment-result-score-value">Your score: <strong>${score} / ${maxScore}</strong></p>
             <p class="assessment-result-explanation">${category.explanation}</p>
             ${capabilitiesHtml}
+            <div class="assessment-score-ranges">
+                <h4 class="assessment-score-ranges-title">Score ranges</h4>
+                <ul class="assessment-score-ranges-list">
+                    ${rangesHtml}
+                </ul>
+            </div>
             <div class="assessment-result-actions">
                 <button class="btn btn-blue assessment-btn" id="restart-btn">Retake Assessment</button>
                 <a href="documentation.html" class="btn btn-blue assessment-btn">Get Started with OJP</a>
