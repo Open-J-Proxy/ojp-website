@@ -579,6 +579,7 @@ footer {
         right: -100%;
         width: 280px;
         height: 100vh;
+        height: 100dvh; /* dynamic viewport height - fixes mobile browser address bar cutoff */
         background-color: var(--white);
         box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
         transition: right 0.3s ease;
@@ -667,6 +668,22 @@ footer {
     /* Reduce horizontal padding on feature cards for phones */
     .feature-card {
         padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    /* Floating menu - phone resolution: 30% smaller items + scrollable */
+    nav {
+        overflow-y: auto;
+        height: 100vh;
+        height: 100dvh; /* dynamic viewport height - fixes Brave/mobile browser address bar cutoff */
+    }
+
+    nav ul {
+        padding-top: 56px; /* proportionally reduced from 80px */
+    }
+
+    nav a {
+        font-size: 0.75rem; /* ~25% smaller than 1rem default, respects WCAG 12px minimum */
+        padding: 1.4rem; /* 30% smaller than 2rem (--spacing-md) */
     }
 }
 
