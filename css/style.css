@@ -940,3 +940,25 @@ footer {
 .mb-1 { margin-bottom: var(--spacing-sm); }
 .mb-2 { margin-bottom: var(--spacing-md); }
 .mb-3 { margin-bottom: var(--spacing-lg); }
+
+
+/* Button group for side-by-side action buttons */
+.btn-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Helper text below action buttons */
+.action-hint {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--gray);
+}
+
+/* Helper text on dark/colored backgrounds */
+.cta-section .action-hint {
+    color: rgba(255, 255, 255, 0.85);
+    opacity: 1;
+}
