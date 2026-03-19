@@ -63,7 +63,7 @@
                 <h3>Step 1: Start the OJP Server</h3>
                 <p>The easiest way to get started is using Docker:</p>
                 <div class="code-block">
-                    <code>docker run --rm -d --network host rrobetti/ojp:0.3.1-beta</code>
+                    <code>docker run --rm -d --network host rrobetti/ojp:0.4.0-beta</code>
                 </div>
                 <p style="margin-top: 1rem;">For production deployments, you can also run as a standalone JAR or deploy to Kubernetes.</p>
             </div>
@@ -75,12 +75,12 @@
                     <code>&lt;dependency&gt;<br>
     &lt;groupId&gt;org.openjproxy&lt;/groupId&gt;<br>
     &lt;artifactId&gt;ojp-jdbc-driver&lt;/artifactId&gt;<br>
-    &lt;version&gt;0.3.1-beta&lt;/version&gt;<br>
+    &lt;version&gt;0.4.0-beta&lt;/version&gt;<br>
 &lt;/dependency&gt;</code>
                 </div>
                 <p style="margin-top: 1rem;">For Gradle projects:</p>
                 <div class="code-block">
-                    <code>implementation 'org.openjproxy:ojp-jdbc-driver:0.3.1-beta'</code>
+                    <code>implementation 'org.openjproxy:ojp-jdbc-driver:0.4.0-beta'</code>
                 </div>
             </div>
 
@@ -175,13 +175,21 @@ jdbc:ojp[localhost:1059]_sqlserver://localhost:1433;databaseName=mydb</code>
             <div class="features-grid">
                 <div class="feature-card">
                     <h3>Spring Boot</h3>
-                    <p>Configure OJP in your application.properties:</p>
+                    <p>Use the OJP Spring Boot Starter (recommended) for zero-configuration setup. Replace <code>spring-boot-starter-jdbc</code> in your pom.xml:</p>
                     <div class="code-block">
-                        <code>spring.datasource.driver-class-name=org.openjproxy.jdbc.Driver<br>
-spring.datasource.url=jdbc:ojp[localhost:1059]_postgresql://localhost:5432/mydb<br>
-spring.datasource.username=user<br>
-spring.datasource.password=password</code>
+                        <code>&lt;dependency&gt;<br>
+    &lt;groupId&gt;org.openjproxy&lt;/groupId&gt;<br>
+    &lt;artifactId&gt;spring-boot-starter-ojp&lt;/artifactId&gt;<br>
+    &lt;version&gt;0.4.0-beta&lt;/version&gt;<br>
+&lt;/dependency&gt;</code>
                     </div>
+                    <p style="margin-top: 1rem;">Then set your connection URL in <code>application.properties</code>:</p>
+                    <div class="code-block">
+                        <code>spring.datasource.url=jdbc:ojp[localhost:1059]_postgresql://localhost/mydb<br>
+spring.datasource.username=user<br>
+spring.datasource.password=secret</code>
+                    </div>
+                    <p style="margin-top: 1rem;">The starter automatically configures the driver class and <code>SimpleDriverDataSource</code>. For projects that cannot use the starter, see the <a href="https://github.com/Open-J-Proxy/ojp/tree/main/documents/java-frameworks/spring-boot" target="_blank">Spring Boot integration guide</a>.</p>
                 </div>
                 <div class="feature-card">
                     <h3>Jakarta EE / Java EE</h3>
