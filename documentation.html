@@ -58,8 +58,61 @@
                 <h2>Quick Start Guide</h2>
                 <p>Get up and running in 5 minutes</p>
             </div>
-            
-            <div class="feature-card">
+
+            <!-- Spring Boot Starter Path -->
+            <div class="feature-card" style="border-left: 4px solid #2196F3;">
+                <h3>🚀 Spring Boot Users — Use the Starter (Recommended)</h3>
+                <p>If you are using Spring Boot, the <strong>Spring Boot Starter OJP</strong> (<code>spring-boot-starter-ojp</code>) provides zero-configuration auto-setup. Follow the three steps below instead of the generic path.</p>
+                <p style="margin-top: 0.75rem;">Requirements: Spring Boot 4.x (Java 17+). Also works with Spring Boot 3.x. For Java 11 projects, use the <a href="#generic-quickstart">generic path</a> below or the <a href="https://github.com/Open-J-Proxy/ojp/tree/main/documents/java-frameworks/spring-boot" target="_blank">manual configuration guide</a>.</p>
+            </div>
+
+            <div class="feature-card mt-2">
+                <h3>Spring Boot Step 1: Start the OJP Server</h3>
+                <p>The easiest way to get started is using Docker:</p>
+                <div class="code-block">
+                    <code>docker run --rm -d --network host rrobetti/ojp:0.4.0-beta</code>
+                </div>
+                <p style="margin-top: 1rem;">For production deployments, you can also run as a standalone JAR or deploy to Kubernetes.</p>
+            </div>
+
+            <div class="feature-card mt-2">
+                <h3>Spring Boot Step 2: Add the OJP Starter Dependency</h3>
+                <p>Replace <code>spring-boot-starter-jdbc</code> in your <code>pom.xml</code> with the OJP starter:</p>
+                <div class="code-block">
+                    <code>&lt;dependency&gt;<br>
+    &lt;groupId&gt;org.openjproxy&lt;/groupId&gt;<br>
+    &lt;artifactId&gt;spring-boot-starter-ojp&lt;/artifactId&gt;<br>
+    &lt;version&gt;0.4.0-beta&lt;/version&gt;<br>
+&lt;/dependency&gt;</code>
+                </div>
+                <p style="margin-top: 1rem;">The starter includes the OJP JDBC driver and automatically configures <code>spring.datasource.driver-class-name</code> and <code>SimpleDriverDataSource</code> — no manual driver setup needed.</p>
+            </div>
+
+            <div class="feature-card mt-2">
+                <h3>Spring Boot Step 3: Set Your Connection URL</h3>
+                <p>Add the OJP connection URL to <code>application.properties</code>:</p>
+                <div class="code-block">
+                    <code># OJP connection URL: jdbc:ojp[&lt;ojp-host&gt;:&lt;ojp-port&gt;]_&lt;actual-driver-url&gt;<br>
+spring.datasource.url=jdbc:ojp[localhost:1059]_postgresql://user@localhost/mydb<br>
+spring.datasource.username=user<br>
+spring.datasource.password=secret</code>
+                </div>
+                <p style="margin-top: 1rem;">That's it! The starter handles everything else. Optionally, fine-tune the OJP server-side connection pool:</p>
+                <div class="code-block">
+                    <code>ojp.connection.pool.maximum-pool-size=20<br>
+ojp.connection.pool.minimum-idle=5<br>
+ojp.connection.pool.connection-timeout=30000</code>
+                </div>
+                <p style="margin-top: 1rem;">For the full Spring Boot integration guide, including named datasource pools and troubleshooting, see the <a href="https://github.com/Open-J-Proxy/ojp/tree/main/documents/java-frameworks/spring-boot" target="_blank">Spring Boot integration guide</a>.</p>
+            </div>
+
+            <!-- Generic / Non-Spring Boot Path -->
+            <div class="feature-card mt-2" id="generic-quickstart" style="border-left: 4px solid #607D8B;">
+                <h3>⚙️ Generic Java / Non-Spring Boot</h3>
+                <p>If you are not using Spring Boot (or need manual configuration for Java 11), follow the steps below.</p>
+            </div>
+
+            <div class="feature-card mt-2">
                 <h3>Step 1: Start the OJP Server</h3>
                 <p>The easiest way to get started is using Docker:</p>
                 <div class="code-block">
