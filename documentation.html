@@ -63,7 +63,7 @@
                 <h3>Step 1: Start the OJP Server</h3>
                 <p>The easiest way to get started is using Docker:</p>
                 <div class="code-block">
-                    <code>docker run --rm -d --network host rrobetti/ojp:0.4.6-beta</code>
+                    <code>docker run --rm -d --network host rrobetti/ojp:0.4.8-beta</code>
                 </div>
                 <p style="margin-top: 1rem;">For production deployments, you can also run as a standalone JAR or deploy to Kubernetes.</p>
             </div>
@@ -75,12 +75,12 @@
                     <code>&lt;dependency&gt;<br>
     &lt;groupId&gt;org.openjproxy&lt;/groupId&gt;<br>
     &lt;artifactId&gt;ojp-jdbc-driver&lt;/artifactId&gt;<br>
-    &lt;version&gt;0.4.6-beta&lt;/version&gt;<br>
+    &lt;version&gt;0.4.8-beta&lt;/version&gt;<br>
 &lt;/dependency&gt;</code>
                 </div>
                 <p style="margin-top: 1rem;">For Gradle projects:</p>
                 <div class="code-block">
-                    <code>implementation 'org.openjproxy:ojp-jdbc-driver:0.4.6-beta'</code>
+                    <code>implementation 'org.openjproxy:ojp-jdbc-driver:0.4.8-beta'</code>
                 </div>
                 <p style="margin-top: 1rem;"><strong>Spring Boot users:</strong> use <code>spring-boot-starter-ojp</code> instead — it includes the driver and auto-configures the datasource. See the <a href="https://github.com/Open-J-Proxy/ojp/tree/main/documents/java-frameworks/spring-boot" target="_blank">Spring Boot integration guide</a>; steps 3 and 4 below are not required.</p>
             </div>
@@ -181,7 +181,7 @@ jdbc:ojp[localhost:1059]_sqlserver://localhost:1433;databaseName=mydb</code>
                         <code>&lt;dependency&gt;<br>
     &lt;groupId&gt;org.openjproxy&lt;/groupId&gt;<br>
     &lt;artifactId&gt;spring-boot-starter-ojp&lt;/artifactId&gt;<br>
-    &lt;version&gt;0.4.6-beta&lt;/version&gt;<br>
+    &lt;version&gt;0.4.8-beta&lt;/version&gt;<br>
 &lt;/dependency&gt;</code>
                     </div>
                     <p style="margin-top: 1rem;">Then set your connection URL in <code>application.properties</code>:</p>
