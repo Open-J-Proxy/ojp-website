@@ -680,6 +680,7 @@ footer {
 /* Mobile phones and small tablets */
 @media (max-width: 768px) {
     .top-banner {
+        position: relative; /* let banner scroll away on mobile; header then sticks at top */
         height: auto;
         min-height: var(--banner-height);
         padding: 0.5rem var(--spacing-sm);
