@@ -9,6 +9,9 @@
     --primary-blue-light: #0066B8;
     --secondary-blue: #003D75;
     --accent-blue: #3D8FCC;
+
+    /* Top banner height - used to offset sticky header */
+    --banner-height: 44px;
     
     /* Neutral Colors */
     --white: #FFFFFF;
@@ -98,12 +101,56 @@ a:hover {
     color: var(--primary-blue-dark);
 }
 
+/* Top Banner */
+.top-banner {
+    background-color: var(--primary-blue-dark);
+    color: var(--white);
+    text-align: center;
+    padding: 0 var(--spacing-md);
+    height: var(--banner-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
+    font-size: 0.9rem;
+}
+
+.top-banner p {
+    color: rgba(255, 255, 255, 0.92);
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.top-banner .btn-banner {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    background-color: var(--white);
+    color: var(--primary-blue);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.top-banner .btn-banner:hover {
+    background-color: var(--light-gray);
+    color: var(--primary-blue-dark);
+}
+
 /* Header */
 header {
     background-color: var(--white);
     box-shadow: var(--shadow-md);
     position: sticky;
-    top: 0;
+    top: var(--banner-height);
     z-index: 1000;
 }
 
@@ -632,6 +679,21 @@ footer {
 
 /* Mobile phones and small tablets */
 @media (max-width: 768px) {
+    .top-banner {
+        height: auto;
+        min-height: var(--banner-height);
+        padding: 0.5rem var(--spacing-sm);
+        font-size: 0.8rem;
+    }
+
+    .top-banner p {
+        font-size: 0.8rem;
+    }
+
+    header {
+        top: 0;
+    }
+
     .hero h1 {
         font-size: 2.5rem;
     }
@@ -979,3 +1041,123 @@ footer {
     color: rgba(255, 255, 255, 0.85);
     opacity: 1;
 }
+
+/* Beta notice section (replaces "Enterprise Ready" trust signal) */
+.beta-notice {
+    background-color: #fffbeb;
+    border-left: 4px solid var(--warning-orange);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: 0;
+    text-align: center;
+}
+
+.beta-notice h3 {
+    color: var(--darker-gray);
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.beta-notice p {
+    color: var(--dark-gray);
+    font-size: 1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* Community guide card */
+.community-guide-card {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+    border: 2px solid var(--accent-blue);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.community-guide-card h3 {
+    color: var(--secondary-blue);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.community-guide-card p {
+    color: var(--dark-gray);
+    font-size: 1.05rem;
+    margin-bottom: var(--spacing-md);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Stressar / benchmark section */
+.stressar-card {
+    background: linear-gradient(135deg, var(--darker-gray) 0%, #2d3748 100%);
+    border-radius: 12px;
+    padding: var(--spacing-lg);
+    text-align: center;
+    color: var(--white);
+    box-shadow: var(--shadow-lg);
+}
+
+.stressar-card h3 {
+    color: var(--white);
+    font-size: 1.75rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stressar-card p {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1.05rem;
+    margin-bottom: var(--spacing-md);
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Before 1.0.0 section list */
+.before-100-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    max-width: 640px;
+    margin: var(--spacing-md) auto 0;
+}
+
+.before-100-list li {
+    padding: 0.5rem 0 0.5rem 2rem;
+    position: relative;
+    color: var(--dark-gray);
+    font-size: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.before-100-list li:last-child {
+    border-bottom: none;
+}
+
+.before-100-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+/* Kubernetes / Helm card */
+.helm-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+}
+
+.helm-card h3 {
+    color: var(--secondary-blue);
+    margin-bottom: var(--spacing-sm);
+}
+
+.helm-card p {
+    color: var(--gray);
+    margin-bottom: var(--spacing-sm);
+}
+

@@ -17,6 +17,12 @@
     </script>
 </head>
 <body>
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <p>OJP 1.0.0 is coming. Join the early adopters list to receive benchmarks, release updates and free architecture suitability assessments.</p>
+        <a href="contact.html" class="btn-banner">Join Early Adopters</a>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="header-container">
@@ -47,14 +53,20 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
-            <h1>Take Control of Your Java Database Layer</h1>
-            <p>Open J Proxy is the <strong>first open-source Type 3 JDBC driver</strong> and database control plane — fully Apache 2.0. Decouple connection pooling from your applications, gain built-in observability, and run freely across any database or cloud without vendor lock-in.</p>
+            <h1>Protect your database from connection storms and overload.</h1>
+            <p>Open J Proxy is an open-source database control plane for Java applications. It centralizes connection management, applies backpressure, isolates slow queries, and helps keep relational databases stable under pressure.</p>
             <div class="hero-buttons">
-                <a href="documentation.html" class="btn btn-primary">Get Started</a>
-                <a href="products.html" class="btn btn-secondary">Learn More</a>
+                <a href="documentation.html" class="btn btn-primary">Try OJP Locally</a>
+                <a href="contact.html" class="btn btn-secondary">Join the 1.0 Early Adopters List</a>
             </div>
         </div>
     </section>
+
+    <!-- Beta Notice -->
+    <div class="beta-notice">
+        <h3>Building toward production-ready 1.0.0</h3>
+        <p>OJP is currently in beta. Use it for evaluation, testing, benchmarks, architecture reviews and early feedback before the 1.0.0 LTS release.</p>
+    </div>
 
     <!-- Trust Signals -->
     <section class="trust-section">
@@ -67,16 +79,12 @@
                 </div>
                 <div class="trust-badge">
                     <span class="trust-badge-icon">✓</span>
-                    <span>Enterprise Ready</span>
+                    <span>Multi-Database Support</span>
                 </div>
                 <div class="trust-badge">
                     <span class="trust-badge-icon">✓</span>
-                    <span>Multi-Database Support</span>
+                    <span>Zero Code Changes</span>
                 </div>
-                <!--<div class="trust-badge">
-                    <span class="trust-badge-icon">✓</span>
-                    <span>Production Tested</span>
-                </div>-->
             </div>
         </div>
     </section>
@@ -95,15 +103,26 @@
                     <p>A database proxy centralises connection pooling and traffic management, giving you a single governance point for all database access. It also acts as a resilience layer — isolating application instances from database failures and preventing cascading outages, so your application stays stable under pressure.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Run a Smaller Database</h3>
-                    <p>OJP's built-in backpressure mechanism absorbs traffic spikes by queuing requests intelligently rather than forwarding every burst directly to the database. In most use cases this means you can right-size — and therefore reduce the cost of — your database instance without sacrificing reliability.</p>
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Use database capacity more safely</h3>
+                    <p>OJP does not make your database infinite. It helps enforce safe limits, apply backpressure, and prevent application-side scaling from overwhelming a finite database connection budget.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔌</div>
                     <h3>Works With Any JDBC Database</h3>
                     <p>OJP supports every database that provides a standard JDBC driver — PostgreSQL, MySQL, Oracle, SQL Server, MariaDB, DB2, H2, CockroachDB, and beyond. If a JDBC driver exists for your database, OJP works with it.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Spring Boot Guide -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="community-guide-card">
+                <h3>📘 Community Guide: OJP + Spring Boot Zero to Hero</h3>
+                <p>A hands-on community guide with runnable Spring Boot examples, from first connection to observability and production hardening.</p>
+                <a href="https://github.com/Open-J-Proxy/ojp/tree/main/documents/java-frameworks/spring-boot" target="_blank" class="btn btn-blue">Open the Guide</a>
             </div>
         </div>
     </section>
@@ -227,6 +246,56 @@
                         <code>jdbc:ojp[localhost:1059]_<br>  postgresql://user@host/db</code>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kubernetes / Helm Charts Section -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="section-title">
+                <h2>Kubernetes Deployment</h2>
+                <p>OJP Helm Charts are available for deploying the OJP Server in Kubernetes</p>
+            </div>
+            <div class="helm-card">
+                <h3>⎈ OJP Helm Charts</h3>
+                <p>Add the OJP Helm repository and deploy the OJP Server to your cluster with a single command.</p>
+                <div class="code-block">
+                    <code>helm repo add ojp https://Open-J-Proxy.github.io/ojp-helm</code>
+                </div>
+                <a href="https://github.com/Open-J-Proxy/ojp-helm" target="_blank" class="btn btn-blue" style="margin-top: 1.5rem;">View Helm Charts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before 1.0.0 Section -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Before 1.0.0</h2>
+                <p>OJP is currently in beta. The best way to help before 1.0.0 is to:</p>
+            </div>
+            <ul class="before-100-list">
+                <li>run the local demo,</li>
+                <li>review the Stressar benchmark results,</li>
+                <li>test OJP against non-production workloads,</li>
+                <li>join the early adopters list,</li>
+                <li>book a free suitability assessment if your team has database scaling or connection pressure problems.</li>
+            </ul>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="contact.html" class="btn btn-blue">Join the Early Adopters List</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stressar Benchmark Results Section -->
+    <section class="section section-dark">
+        <div class="container">
+            <div class="stressar-card">
+                <h3>📊 Stressar Benchmark Results</h3>
+                <p>We are preparing public benchmark results comparing OJP with traditional application-local connection pooling and database proxy approaches under mixed OLTP/OLAP load, connection pressure and overload scenarios.</p>
+                <p>Join the early adopters list to receive the full report when published.</p>
+                <a href="contact.html" class="btn btn-primary">Notify Me When Results Are Published</a>
             </div>
         </div>
     </section>
