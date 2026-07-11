@@ -32,6 +32,7 @@ This website contains multiple pages designed with a corporate, professional fee
 - **Use Cases** (`use-cases.html`) - Real-world applications and success stories
 - **About** (`about.html`) - Mission, values, and project information
 - **Contact** (`contact.html`) - Contact forms and community links
+- **Check Email Confirmation** (`subscribe-check-email.html`) - Intermediary page instructing users to confirm subscription by email
 
 ## Design
 
