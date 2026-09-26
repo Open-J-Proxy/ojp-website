@@ -1021,6 +1021,11 @@ footer {
 .mb-2 { margin-bottom: var(--spacing-md); }
 .mb-3 { margin-bottom: var(--spacing-lg); }
 
+.solution-label {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
 
 /* Button group for side-by-side action buttons */
 .btn-group {
@@ -1161,4 +1166,3 @@ footer {
     color: var(--gray);
     margin-bottom: var(--spacing-sm);
 }
-
