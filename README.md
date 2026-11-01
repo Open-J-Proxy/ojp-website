@@ -26,7 +26,7 @@ Open J Proxy (OJP) is an open-source Java project that acts as a JDBC Type 3 dri
 
 This website contains multiple pages designed with a corporate, professional feel emphasizing performance and trust:
 
-- **Homepage** (`index.html`) - Overview, features, and call-to-action
+- **Homepage** (`index.html`) - Overview, features, call-to-action, and a hero link to "Break The Spiral", the first song created for Open J Proxy (opens YouTube in a new tab)
 - **Products** (`products.html`) - Detailed product information and specifications
 - **Documentation** (`documentation.html`) - Getting started guide and technical documentation
 - **Use Cases** (`use-cases.html`) - Real-world applications and success stories
@@ -137,4 +137,3 @@ We welcome contributions! Please see the main [OJP repository](https://github.co
 ## License
 
 This website is part of the Open J Proxy project. See the main repository for license information.
-
