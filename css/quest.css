@@ -61,10 +61,19 @@
     color: var(--quest-cyan);
 }
 
-.quest-topline .text-button {
+.quest-topline .quest-leave {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     min-height: 44px;
-    padding: 0 0.5rem;
+    color: var(--quest-muted);
+    font-size: 1.1rem;
     letter-spacing: 0;
+    white-space: nowrap;
+}
+
+.quest-topline .quest-leave:hover {
+    color: #fff;
 }
 
 .quest-xp {
