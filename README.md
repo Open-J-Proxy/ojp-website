@@ -144,6 +144,8 @@ OJP Quest is a static, account-free, three-act learning game at [`quest.html`](q
 
 The quest page omits the site's navigation menu. Its enlarged top-left **← Leave** link calls browser history back, returning to the previous page without resetting quest progress. With no previous history entry, it stays on the quest page.
 
+The quest stylesheet and entry module use matching version query strings in `quest.html` so returning visitors, including mobile browsers, fetch the updated Leave control rather than cached assets. Bump both versions when changing the quest navigation.
+
 ### Content and game logic
 
 - `js/quest/content.mjs` contains the three shared learning objectives, eBook signup destination, and all eight original worlds. Each world defines its theme, badge title, three stories, contextual challenges, answer explanations, hints, and victory copy.
