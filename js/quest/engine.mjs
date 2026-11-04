@@ -1,4 +1,4 @@
-import { OBJECTIVES, WORLDS } from './content.mjs';
+import { getQuestById, getQuestForWorld, getWorldById, OBJECTIVES, QUESTS, WORLDS } from './content.mjs';
 
 export const STORAGE_KEY = 'ojp-quest-progress';
 export const SCHEMA_VERSION = 1;
@@ -7,10 +7,12 @@ export const MAX_XP = OBJECTIVES.length * XP_PER_OBJECTIVE;
 
 const objectiveIds = new Set(OBJECTIVES.map(objective => objective.id));
 const worldIds = new Set(WORLDS.map(world => world.id));
+const questIds = new Set(QUESTS.map(quest => quest.id));
 
 export function createInitialState() {
     return {
         version: SCHEMA_VERSION,
+        selectedQuestId: null,
         selectedWorld: null,
         currentAct: 0,
         currentChallenge: null,
@@ -58,8 +60,12 @@ export function validateState(input) {
     state.unlockedBadges = uniqueKnownIds(input.unlockedBadges, worldIds)
         .filter(id => state.completedWorlds.includes(id));
 
+    if (typeof input.selectedQuestId === 'string' && questIds.has(input.selectedQuestId)) {
+        state.selectedQuestId = input.selectedQuestId;
+    }
     if (typeof input.selectedWorld === 'string' && worldIds.has(input.selectedWorld)) {
         state.selectedWorld = input.selectedWorld;
+        state.selectedQuestId = getWorldById(input.selectedWorld).questId;
         const progress = state.worlds[input.selectedWorld];
         if (progress && ['story', 'challenge', 'reveal', 'complete'].includes(progress.phase)) {
             state.currentAct = progress.act;
@@ -157,8 +163,10 @@ export function createQuestStore(storage = null) {
     return {
         getState: () => state,
         startWorld(id) {
-            if (!worldIds.has(id)) return state;
+            const world = getWorldById(id);
+            if (!world || (state.selectedQuestId && state.selectedQuestId !== world.questId)) return state;
             const previous = state.worlds[id];
+            state.selectedQuestId = world.questId;
             state.selectedWorld = id;
             if (!previous || previous.phase === 'complete') {
                 state.worlds[id] = { act: 0, phase: 'story', solved: false, attempts: 0 };
@@ -169,9 +177,18 @@ export function createQuestStore(storage = null) {
             state.currentChallenge = progress.phase === 'challenge' ? progress.act : null;
             return persist();
         },
+        startQuest(id) {
+            if (!questIds.has(id)) return state;
+            state.selectedQuestId = id;
+            state.selectedWorld = null;
+            state.phase = 'worlds';
+            state.currentChallenge = null;
+            return persist();
+        },
         continueQuest() {
             if (!state.selectedWorld || state.worlds[state.selectedWorld]?.phase === 'complete') {
-                state.selectedWorld = WORLDS.find(world => {
+                const quest = getQuestById(state.selectedQuestId);
+                state.selectedWorld = quest?.worlds.find(world => {
                     const progress = state.worlds[world.id];
                     return progress && progress.phase !== 'complete';
                 })?.id || state.selectedWorld;
@@ -184,7 +201,16 @@ export function createQuestStore(storage = null) {
             state.currentChallenge = progress.phase === 'challenge' ? progress.act : null;
             return persist();
         },
-        goToWorlds() {
+        goToWorlds(questId = state.selectedQuestId) {
+            if (questId && !questIds.has(questId)) return state;
+            state.selectedQuestId = questId || null;
+            state.selectedWorld = null;
+            state.phase = 'worlds';
+            state.currentChallenge = null;
+            return persist();
+        },
+        goToQuests() {
+            state.selectedQuestId = null;
             state.selectedWorld = null;
             state.phase = 'worlds';
             state.currentChallenge = null;
@@ -197,7 +223,7 @@ export function createQuestStore(storage = null) {
         },
         answer(index) {
             if (state.phase !== 'challenge' || !state.selectedWorld) return { correct: false, xpEarned: 0 };
-            const world = WORLDS.find(item => item.id === state.selectedWorld);
+            const world = getWorldById(state.selectedWorld);
             const challenge = world?.acts[state.currentAct]?.challenge;
             const progress = activeProgress();
             if (!challenge || !progress) return { correct: false, xpEarned: 0 };
@@ -207,7 +233,8 @@ export function createQuestStore(storage = null) {
                 persist();
                 return { correct: false, xpEarned: 0, attempts: progress.attempts };
             }
-            const objectiveId = OBJECTIVES[state.currentAct].id;
+            const objectiveId = getQuestForWorld(state.selectedWorld)?.objectives[state.currentAct].id;
+            if (!objectiveId) return { correct: false, xpEarned: 0 };
             const alreadyMastered = state.completedObjectives.includes(objectiveId);
             if (!alreadyMastered) state.completedObjectives.push(objectiveId);
             state.xp = state.completedObjectives.length * XP_PER_OBJECTIVE;
@@ -241,7 +268,8 @@ export function createQuestStore(storage = null) {
         },
         completeWorld() {
             if (!state.selectedWorld || state.phase !== 'reveal') return state;
-            if (state.completedObjectives.length !== OBJECTIVES.length) return state;
+            const objectives = getQuestForWorld(state.selectedWorld)?.objectives || [];
+            if (!objectives.length || !objectives.every(objective => state.completedObjectives.includes(objective.id))) return state;
             updateProgress('complete', 2, false);
             if (!state.completedWorlds.includes(state.selectedWorld)) state.completedWorlds.push(state.selectedWorld);
             if (!state.unlockedBadges.includes(state.selectedWorld)) state.unlockedBadges.push(state.selectedWorld);
