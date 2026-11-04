@@ -137,3 +137,37 @@ We welcome contributions! Please see the main [OJP repository](https://github.co
 ## License
 
 This website is part of the Open J Proxy project. See the main repository for license information.
+
+## OJP Quest
+
+OJP Quest is a static, account-free, three-act learning game at [`quest.html`](quest.html). The homepage presents a dismissible invitation; a persistent navigation link is available across the site's main pages. Quest code and content load only on the quest page. All artwork is generated as original inline SVG, and the feature adds no frontend dependencies, backend, cookies, or external runtime services.
+
+### Content and game logic
+
+- `js/quest/content.mjs` contains the three shared learning objectives, eBook signup destination, and all eight original worlds. Each world defines its theme, badge title, three stories, contextual challenges, answer explanations, hints, and victory copy.
+- `js/quest/engine.mjs` owns progression, validation, persistence, replay, badge unlocks, and XP. The first correct answer for each shared objective awards 50 XP, for a maximum of 150 XP across all worlds. Incorrect answers, retries, and replaying mastered objectives earn no XP.
+- `js/quest/app.mjs` renders the shared story/challenge/reveal/reward flow, inline SVG illustrations, downloadable achievement cards, and the non-transmitting `ojpquest:event` browser event interface. Add listeners for that custom event if a future privacy-reviewed analytics integration is approved; the game does not send analytics to a service.
+- `css/quest.css` styles the quest; the invitation and persistent navigation entry are integrated with the site's existing `css/style.css`, `js/main.js`, and static HTML pages.
+- `tests/quest.test.mjs` uses Node's built-in test runner to cover game rules, content shape, and storage behavior.
+
+### Adding worlds and editing questions
+
+Add a world object to `WORLDS` in `js/quest/content.mjs`. Give it a unique `id` and `palette`, a badge name, genre, description, three acts, and a victory message. Add a matching original SVG path to `iconMarkup` in `js/quest/app.mjs`; that shared renderer uses it for the world art and badge card. Each act must use the corresponding shared objective in order and include a story, a challenge with three options and one zero-based `answer`, a technically accurate explanation, two or more progressive hints, and incorrect-answer feedback. Update the content tests if their requirements change.
+
+Edit the shared `OBJECTIVES` array only as an intentional scoring/schema change: objective IDs are persisted, each objective is worth 50 XP, and the current three objectives cap XP at 150 even across world switches. Badges are the per-world `badge` values and are unlocked only after the third challenge and the technology reveal are completed.
+
+### Anonymous progress and reset
+
+Progress is stored under the versioned `ojp-quest-progress` key in browser `localStorage`; it contains no personal data. Stored values are allow-listed and normalized before they affect the interface, and unsupported schema versions or corrupted JSON start a fresh game. If persistent storage is blocked, the game falls back to tab-scoped `sessionStorage`; if that is unavailable too, it continues in memory for the current page session. The reset action clears quest progress, including the invitation dismissal. These locally stored XP and badges are cosmetic achievements, not verified credentials.
+
+### eBook destination and deployment
+
+There is no public PDF asset in this repository. The reward points to the existing eBook email-signup flow configured by `EBOOK_SIGNUP_URL` in `js/quest/content.mjs`; it is clearly labeled as optional, and neither gameplay nor badge completion asks for an email or subscription. The destination currently delivers the eBook through the existing email-list mechanism. If a direct, public eBook URL becomes available, update that constant and its reward copy; verify the resource before describing it as a download.
+
+This feature uses the existing static-site and GitHub Pages deployment—there is no separate build step. Run locally with the existing Python server instructions above and open `http://localhost:8000/quest.html`. Run the quest tests with:
+
+```bash
+node --test tests/quest.test.mjs
+```
+
+Pushes to `main` continue to deploy through the existing GitHub Pages workflow. The game has not been tested with assistive-technology combinations beyond semantic markup and keyboard/focus behavior; browser compatibility and a screen-reader review remain useful before a broad accessibility claim.
