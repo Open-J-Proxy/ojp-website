@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Choose a world, solve the Connection Crisis, and discover a new approach to database connectivity in OJP Quest. Free, no account required.">
+    <meta name="theme-color" content="#10233e">
+    <title>OJP Quest — Open J Proxy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/quest.css">
+</head>
+<body class="quest-page">
+    <header>
+        <div class="header-container">
+            <a class="logo" href="index.html">
+                <img src="images/ojp-logo.png" alt="">
+                <span>Open J Proxy</span>
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <nav aria-label="Main navigation">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="documentation.html">Documentation</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="fit-assessment.html">Fit Assessment</a></li>
+                    <li><a href="quest.html" class="active" aria-current="page" data-quest-entry>Start a Quest</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="menu-overlay"></div>
+    <main id="quest-app" class="quest-app">
+        <p class="quest-loading">Preparing your quest…</p>
+        <noscript><p class="quest-loading">OJP Quest needs JavaScript to run. The rest of the Open J Proxy website remains available.</p></noscript>
+    </main>
+    <dialog id="reset-dialog" class="quest-dialog" aria-labelledby="reset-title">
+        <form method="dialog">
+            <h2 id="reset-title">Reset all quest progress?</h2>
+            <p>This removes badges, XP, and saved story progress from this browser. You cannot undo this.</p>
+            <div class="dialog-actions">
+                <button type="button" class="button button-quiet" data-action="reset-cancel">Keep my progress</button>
+                <button type="button" class="button button-danger" data-action="reset-confirm">Reset progress</button>
+            </div>
+        </form>
+    </dialog>
+    <script src="js/main.js"></script>
+    <script type="module" src="js/quest/app.mjs"></script>
+</body>
+</html>
