@@ -1,7 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { BADGE_DESCRIPTIONS, OBJECTIVES, WORLDS } from '../js/quest/content.mjs';
 import { createInitialState, createQuestStore, hasUnfinishedQuest, MAX_XP, STORAGE_KEY, validateState } from '../js/quest/engine.mjs';
+
+test('quest navigation assets use matching cache versions', () => {
+    const html = readFileSync(new URL('../quest.html', import.meta.url), 'utf8');
+    const stylesheetVersion = html.match(/href="css\/quest\.css\?v=([^"]+)"/)?.[1];
+    const moduleVersion = html.match(/src="js\/quest\/app\.mjs\?v=([^"]+)"/)?.[1];
+    assert.ok(stylesheetVersion, 'quest stylesheet must bypass the old cached URL');
+    assert.ok(moduleVersion, 'quest entry module must bypass the old cached URL');
+    assert.equal(stylesheetVersion, moduleVersion);
+});
 
 class MemoryStorage {
     values = new Map();
