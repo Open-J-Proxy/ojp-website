@@ -136,11 +136,15 @@ function challengeScreen(world, state) {
 
 function revealScreen(world, state) {
     return chrome(`<section class="reveal-panel" aria-labelledby="reveal-title">
-        <p class="eyebrow">THE STORY MEETS THE REAL WORLD</p><div class="reveal-heading">${art(world, `${world.badge} emblem`)}<div><h1 id="reveal-title" tabindex="-1">The architecture that saved your world isn't fiction.</h1><p>${escapeHtml(world.victory)}</p></div></div>
-        <div class="reveal-copy"><p><strong>Open J Proxy is a real, free and open-source database connectivity project, licensed under Apache 2.0.</strong> Its JDBC Type 3 driver communicates with OJP servers over a network protocol. OJP servers manage backend database connection pools, so participating application instances can share centrally managed capacity and acquire backend connections when work needs them.</p>
-        <p>OJP can segregate slow-query workloads to help protect shared resources; it does not make slow SQL run faster. Its client-side high-availability capabilities span configured OJP servers, though an in-flight operation may still be interrupted. OJP also provides observability and supports multiple JDBC database technologies—without erasing differences between their SQL dialects.</p></div>
-        <div class="reveal-links"><a href="documentation.html" data-track="documentation_opened">Explore the documentation ↗</a><a href="https://github.com/Open-J-Proxy/ojp" target="_blank" rel="noopener noreferrer" data-track="github_opened">Explore the OJP source ↗</a></div>
-        <div class="scene-actions"><button type="button" class="button button-primary" data-action="complete-world">Claim your achievement <span aria-hidden="true">→</span></button><button type="button" class="button button-quiet" data-action="previous">← Previous scene</button></div>
+        <p class="eyebrow">THE STORY MEETS THE REAL WORLD</p><div class="reveal-heading">${art(world, `${world.badge} emblem`)}<div><h1 id="reveal-title" tabindex="-1">Your Quest Is Complete</h1><p>${escapeHtml(world.victory)}</p></div></div>
+        <div class="reveal-copy"><p>The challenge you solved exists in real software systems. You’ve just discovered three important ideas:</p>
+        <ol><li><strong>Share resources intelligently.</strong> Independent application pools can reserve database connections that other applications need.</li>
+        <li><strong>Acquire resources when needed.</strong> Idle application-side connections don’t always need to hold physical database connections.</li>
+        <li><strong>Protect shared capacity.</strong> Slow operations shouldn’t be allowed to monopolize connections needed by other workloads.</li></ol>
+        <p><strong>These are real architectural challenges that Open J Proxy helps address.</strong> Open J Proxy is a free, Apache 2.0 open-source project that uses a JDBC Type 3 driver and server-managed database connection pools. It also provides capabilities such as client-side high availability, observability, and support for multiple database technologies.</p>
+        <p>It doesn’t make database capacity infinite or eliminate every failure. It gives applications better ways to coordinate and control how they use that capacity.</p></div>
+        <div class="reveal-links"><a href="documentation.html" data-track="documentation_opened">Explore the documentation ↗</a><a href="${EBOOK_SIGNUP_URL}" target="_blank" rel="noopener noreferrer" data-track="ebook_accessed">Request the OJP eBook (optional) ↗</a><a href="https://github.com/Open-J-Proxy/ojp" target="_blank" rel="noopener noreferrer" data-track="github_opened">Explore the OJP source ↗</a></div>
+        <div class="scene-actions"><button type="button" class="button button-primary" data-action="complete-world">Continue to your achievement badge <span aria-hidden="true">→</span></button><button type="button" class="button button-quiet" data-action="previous">← Previous scene</button></div>
     </section>`, state, world);
 }
 
