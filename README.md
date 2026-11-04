@@ -140,7 +140,7 @@ This website is part of the Open J Proxy project. See the main repository for li
 
 ## OJP Quest
 
-OJP Quest is a static, account-free, three-act learning game at [`quest.html`](quest.html). The homepage presents a dismissible invitation; a persistent navigation link is available across the site's main pages. Quest code and content load only on the quest page. All artwork is generated as original inline SVG, and the feature adds no frontend dependencies, backend, cookies, or external runtime services.
+OJP Quest is a static, account-free learning game at [`quest.html`](quest.html), with three quests, 24 world adventures, and 72 learning challenges. The homepage presents a dismissible invitation; a persistent navigation link is available across the site's main pages. Quest code and content load only on the quest page. All artwork is generated as original inline SVG, and the feature adds no frontend dependencies, backend, cookies, or external runtime services.
 
 The quest page omits the site's navigation menu. Its enlarged top-left **← Leave** link calls browser history back, returning to the previous page without resetting quest progress. With no previous history entry, it stays on the quest page.
 
@@ -148,17 +148,18 @@ The quest stylesheet and entry module use matching version query strings in `que
 
 ### Content and game logic
 
-- `js/quest/content.mjs` contains the three shared learning objectives, eBook signup destination, and all eight original worlds. Each world defines its theme, badge title, three stories, contextual challenges, answer explanations, hints, and victory copy.
-- `js/quest/engine.mjs` owns progression, validation, persistence, replay, badge unlocks, and XP. The first correct answer for each shared objective awards 50 XP, for a maximum of 150 XP across all worlds. Incorrect answers, retries, and replaying mastered objectives earn no XP.
+- `js/quest/content.mjs` defines the three quests, their learning objectives, and the collection of worlds. The authored adventures are in `js/quest/floodgate.mjs` and `js/quest/database-freedom.mjs`; the original Connection Crisis worlds remain in `content.mjs`.
+- `js/quest/engine.mjs` owns progression, validation, persistence, replay, badge unlocks, and XP. Each quest awards 50 XP for each of its three objectives (150 XP per quest, 450 total); incorrect answers, retries, and replaying mastered objectives earn no XP. World-specific badges are earned after completing the technology reveal.
+- The Floodgate Protocol teaches overload, client-side reactive throttling, and controlled recovery. The Database Freedom Quest teaches connectivity-layer independence without implying universal SQL translation or automatic database migration.
 - `js/quest/app.mjs` renders the shared story/challenge/reveal/reward flow, inline SVG illustrations, downloadable achievement cards, and the non-transmitting `ojpquest:event` browser event interface. Add listeners for that custom event if a future privacy-reviewed analytics integration is approved; the game does not send analytics to a service.
 - `css/quest.css` styles the quest; the invitation and persistent navigation entry are integrated with the site's existing `css/style.css`, `js/main.js`, and static HTML pages.
 - `tests/quest.test.mjs` uses Node's built-in test runner to cover game rules, content shape, and storage behavior.
 
 ### Adding worlds and editing questions
 
-Add a world object to `WORLDS` in `js/quest/content.mjs`. Give it a unique `id` and `palette`, a badge name, genre, description, three acts, and a victory message. Add a matching original SVG path to `iconMarkup` in `js/quest/app.mjs`; that shared renderer uses it for the world art and badge card. Each act must use the corresponding shared objective in order and include a story, a challenge with three options and one zero-based `answer`, a technically accurate explanation, two or more progressive hints, and incorrect-answer feedback. Update the content tests if their requirements change.
+Add worlds to the appropriate quest's `worlds` list and provide a unique `id`, `palette`, `badge`, genre, description, three acts, and victory message. `icon` selects one of the shared original SVG paths in `js/quest/app.mjs`. Each act maps to one of that quest's three objectives and includes a story, a challenge with three options and a zero-based `answer`, and a technically accurate explanation. The shared content preparation supplies hints and incorrect-answer feedback where they are not authored.
 
-Edit the shared `OBJECTIVES` array only as an intentional scoring/schema change: objective IDs are persisted, each objective is worth 50 XP, and the current three objectives cap XP at 150 even across world switches. Badges are the per-world `badge` values and are unlocked only after the third challenge and the technology reveal are completed.
+Objective IDs are persisted and each is worth 50 XP. Keep the three objectives for each quest unique so XP is awarded once per objective within that quest, even when players switch worlds. The 24 per-world `badge` values are unique; a badge unlocks only after the third challenge and technology reveal are completed.
 
 ### Anonymous progress and reset
 

@@ -1,4 +1,7 @@
-export const OBJECTIVES = [
+import { DATABASE_FREEDOM_WORLDS } from './database-freedom.mjs';
+import { FLOODGATE_WORLDS } from './floodgate.mjs';
+
+const CONNECTION_CRISIS_OBJECTIVES = [
     { id: 'shared-pooling', title: 'Coordinate shared capacity' },
     { id: 'just-in-time', title: 'Acquire resources when needed' },
     { id: 'isolation-ha', title: 'Protect shared capacity' }
@@ -6,7 +9,7 @@ export const OBJECTIVES = [
 
 export const EBOOK_SIGNUP_URL = 'https://e3b21e9a.sibforms.com/serve/MUIFAJw5SKRLsQqBLrNFqgODA-b6m3GI2V07UYdEx9dKfRKoibEeUV5rC9p81LW8vgoatlqitkMEPO-bRLjn8XGklyNKeXIxV4VGl-jnL1SZcx1qpAXYLJUqDt2UV-MLN4-vjIFwxfjQvXWqPWQmdXUGX8p8RNIh8SPyppiwL9CeO_Bby266HAetM8-kfV1_wGzz_d48js-btk9LgQ==';
 
-export const WORLDS = [
+const CONNECTION_CRISIS_WORLDS = [
     {
         id: 'fantasy', name: 'The Kingdom of a Thousand Gates', genre: 'Epic fantasy',
         badge: 'Guardian of the Gates', palette: ['#244c3b', '#d2a84b'],
@@ -368,6 +371,137 @@ export const WORLDS = [
         victory: 'The next scaling deployment completed without the same connection-budget incident. The team hadn’t made the database limitless. They had made connection management deliberate, observable, and coordinated.'
     }
 ];
+
+function prepareWorlds(worlds, questId, objectives, hintText) {
+    return worlds.map(world => ({
+        ...world,
+        questId,
+        acts: world.acts.map((act, index) => ({
+            ...act,
+            challenge: {
+                ...act.challenge,
+                hints: act.challenge.hints || [
+                    `Think about the main idea: ${objectives[index].title.toLowerCase()}.`,
+                    hintText
+                ],
+                wrong: act.challenge.wrong || 'Revisit the story and consider the technical explanation before trying again.'
+            }
+        }))
+    }));
+}
+
+export const QUESTS = [
+    {
+        id: 'connection-crisis',
+        title: 'The Connection Crisis',
+        description: 'Learn how shared pooling, just-in-time connections, and workload isolation help applications use database capacity.',
+        centralMessage: 'Coordinate finite database connections instead of reserving them independently.',
+        objectives: CONNECTION_CRISIS_OBJECTIVES,
+        worlds: prepareWorlds(
+            CONNECTION_CRISIS_WORLDS,
+            'connection-crisis',
+            CONNECTION_CRISIS_OBJECTIVES,
+            'Look for the answer that shares capacity, acquires it for real work, or protects it from long-running workloads.'
+        ),
+        reveal: {
+            title: 'The Connection Crisis',
+            intro: 'You uncovered three ideas for managing limited database connections:',
+            points: [
+                'Share resources intelligently. Independent application pools can reserve database connections that other applications need.',
+                'Acquire resources when needed. Idle application-side connections do not always need to hold physical database connections.',
+                'Protect shared capacity. Slow operations should not be allowed to monopolize connections needed by other workloads.'
+            ],
+            closing: 'Open J Proxy uses a JDBC Type 3 driver and server-managed database connection pools to help applications coordinate and control how they use finite database capacity.'
+        }
+    },
+    {
+        id: 'floodgate-protocol',
+        title: 'The Floodgate Protocol',
+        description: 'Learn how client-side reactive throttling prevents overload and allows controlled recovery.',
+        centralMessage: 'Sometimes the best way to protect a system is to stop excess requests before they reach it.',
+        references: [{
+            label: 'Read OJP client-throttling documentation',
+            url: 'https://github.com/Open-J-Proxy/ojp/blob/main/documents/ebook/part3-chapter8a-client-throttling.md'
+        }],
+        objectives: [
+            { id: 'floodgate-overload', title: 'Recognize overload' },
+            { id: 'floodgate-client-throttling', title: 'Limit requests before transmission' },
+            { id: 'floodgate-adaptive-recovery', title: 'Recover concurrency gradually' }
+        ],
+        worlds: prepareWorlds(
+            FLOODGATE_WORLDS,
+            'floodgate-protocol',
+            [
+                { title: 'Recognize overload' },
+                { title: 'Limit requests before transmission' },
+                { title: 'Recover concurrency gradually' }
+            ],
+            'Choose the response that limits outgoing work before transmission and adapts as pressure changes.'
+        ),
+        reveal: {
+            title: 'YOU HAVE MASTERED THE FLOODGATE PROTOCOL.',
+            intro: 'A database system has limited capacity. When demand exceeds that capacity, more incoming requests can make performance worse rather than better.',
+            points: [
+                'The server monitors capacity and overload.',
+                'The JDBC driver adapts how much work it sends.',
+                'Excess attempts can be rejected locally before transmission.',
+                'Concurrency limits recover gradually as conditions improve.'
+            ],
+            closing: 'This is one of the distinguishing capabilities of OJP’s Type 3 architecture: control exists on both sides of the network. It does not eliminate overload errors. It allows applications to respond to them closer to their source.'
+        }
+    },
+    {
+        id: 'database-freedom',
+        title: 'The Database Freedom Quest',
+        description: 'Learn how database-agnostic connectivity reduces infrastructure coupling without promising universal SQL portability.',
+        centralMessage: 'Your architecture should not become unnecessarily dependent on one database vendor, proxy technology, or cloud provider.',
+        objectives: [
+            { id: 'database-freedom-fragmentation', title: 'Identify connectivity fragmentation' },
+            { id: 'database-freedom-common-layer', title: 'Use a common connectivity layer' },
+            { id: 'database-freedom-responsibility', title: 'Understand portability responsibilities' }
+        ],
+        worlds: prepareWorlds(
+            DATABASE_FREEDOM_WORLDS,
+            'database-freedom',
+            [
+                { title: 'Identify connectivity fragmentation' },
+                { title: 'Use a common connectivity layer' },
+                { title: 'Understand portability responsibilities' }
+            ],
+            'Choose the answer that separates common connection management from database-specific behavior.'
+        ),
+        reveal: {
+            title: "YOU'VE COMPLETED THE DATABASE FREEDOM QUEST.",
+            intro: 'Architectural freedom does not mean that every technology behaves identically. It means making deliberate choices about which parts of your system need to depend on a particular technology.',
+            points: [
+                'Open J Proxy separates a significant part of database connection management from the underlying database engine.',
+                'Its JDBC Type 3 driver and server-side architecture can provide a consistent connectivity layer across supported databases, using appropriate JDBC drivers.',
+                'This can reduce the need to maintain separate database-specific proxy infrastructures and make the architecture more portable between environments.'
+            ],
+            closing: 'OJP does not automatically translate SQL, migrate databases, or eliminate the operational responsibility of running a connectivity service. TRUE ARCHITECTURAL FREEDOM IS NOT THE ABSENCE OF DEPENDENCIES. IT IS CONTROL OVER WHICH DEPENDENCIES YOU ACCEPT.'
+        }
+    }
+];
+
+export const OBJECTIVES = QUESTS.flatMap(quest => quest.objectives.map(objective => ({
+    ...objective,
+    questId: quest.id
+})));
+
+export const WORLDS = QUESTS.flatMap(quest => quest.worlds);
+
+export function getQuestById(id) {
+    return QUESTS.find(quest => quest.id === id);
+}
+
+export function getWorldById(id) {
+    return WORLDS.find(world => world.id === id);
+}
+
+export function getQuestForWorld(worldId) {
+    const world = getWorldById(worldId);
+    return world ? getQuestById(world.questId) : undefined;
+}
 
 export const BADGE_DESCRIPTIONS = Object.fromEntries(WORLDS.map(world => [
     world.id,

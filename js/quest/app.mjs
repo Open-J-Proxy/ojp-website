@@ -1,4 +1,4 @@
-import { BADGE_DESCRIPTIONS, EBOOK_SIGNUP_URL, OBJECTIVES, WORLDS } from './content.mjs';
+import { BADGE_DESCRIPTIONS, EBOOK_SIGNUP_URL, getQuestById, getQuestForWorld, getWorldById, QUESTS } from './content.mjs';
 import { createBrowserStorage, createQuestStore, hasUnfinishedQuest, MAX_XP, XP_PER_OBJECTIVE } from './engine.mjs';
 
 const root = document.querySelector('#quest-app');
@@ -37,7 +37,7 @@ function art(world, label = world.name) {
         <defs><linearGradient id="${gradientId}" x1="0" x2="1" y1="0" y2="1"><stop stop-color="${base}"/><stop offset="1" stop-color="${accent}"/></linearGradient></defs>
         <rect x="4" y="4" width="120" height="120" rx="32" fill="url(#${gradientId})"/>
         <circle cx="100" cy="27" r="17" fill="#fff" opacity=".12"/>
-        <g fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${iconMarkup[world.id]}</g>
+        <g fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${iconMarkup[world.icon || world.id]}</g>
     </svg>`;
 }
 
@@ -45,9 +45,9 @@ function progressFor(worldId) {
     return game.getState().worlds[worldId];
 }
 
-function worldCards() {
+function worldCards(quest) {
     const state = game.getState();
-    return WORLDS.map(world => {
+    return quest.worlds.map(world => {
         const unlocked = state.unlockedBadges.includes(world.id);
         const progress = progressFor(world.id);
         return `<button class="world-card theme-${world.id}" type="button" data-action="start-world" data-world="${world.id}">
@@ -58,6 +58,18 @@ function worldCards() {
             <span class="world-card-arrow" aria-hidden="true">→</span>
         </button>`;
     }).join('');
+}
+
+function questCard(quest) {
+    const state = game.getState();
+    const earned = quest.worlds.filter(world => state.unlockedBadges.includes(world.id)).length;
+    return `<button class="world-card quest-card" type="button" data-action="select-quest" data-quest="${quest.id}">
+        <span class="world-card-art">${art(quest.worlds[0], quest.title)}</span>
+        <span class="world-card-copy"><span class="world-genre">8 WORLD ADVENTURES · 150 XP</span>
+        <strong>${escapeHtml(quest.title)}</strong><span>${escapeHtml(quest.description)}</span>
+        <span class="world-card-status">${earned} of 8 badges · ${escapeHtml(quest.centralMessage)}</span></span>
+        <span class="world-card-arrow" aria-hidden="true">→</span>
+    </button>`;
 }
 
 function badgeCard(world, unlocked) {
@@ -83,26 +95,47 @@ function chrome(content, state, world = null) {
 
 function worldScreen() {
     const state = game.getState();
-    const badges = state.unlockedBadges.length;
+    const quest = getQuestById(state.selectedQuestId);
+    if (!quest) {
+        return chrome(`<section class="quest-intro" aria-labelledby="quest-title">
+            <div class="intro-copy"><p class="eyebrow">THREE QUESTS. 24 WORLD ADVENTURES. 450 LEARNING XP.</p>
+            <h1 id="quest-title" tabindex="-1">Every great discovery begins with a quest.</h1>
+            <p>Choose an adventure to explore database architecture through story, choices, and technical explanations—no software engineering background required.</p>
+            <div class="intro-facts"><span>3 quests</span><span>24 worlds</span><span>Free · no account</span></div>
+            <p class="collection-count">${state.unlockedBadges.length} of 24 world badges discovered · ${state.xp} / ${MAX_XP} learning XP</p></div>
+            <div class="intro-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="intro-core">OJP<br>QUEST</div></div>
+        </section>
+        <section class="world-picker" aria-labelledby="world-picker-title">
+            <div class="section-heading"><div><p class="eyebrow">PICK YOUR ADVENTURE</p><h2 id="world-picker-title" tabindex="-1">Which quest will you begin?</h2></div><p>Each quest has eight worlds and three learning challenges.</p></div>
+            <div class="world-grid">${QUESTS.map(questCard).join('')}</div>
+        </section>
+        <section class="collection-panel" aria-labelledby="collection-title"><div class="section-heading"><div><p class="eyebrow">YOUR COLLECTION</p><h2 id="collection-title">24 badges across three quests</h2></div></div>
+            <div class="badge-collection">${QUESTS.flatMap(item => item.worlds).map(world => badgeCard(world, state.unlockedBadges.includes(world.id))).join('')}</div>
+        </section>`, state);
+    }
+
+    const badges = quest.worlds.filter(world => state.unlockedBadges.includes(world.id)).length;
     return chrome(`<section class="quest-intro" aria-labelledby="quest-title">
-        <div class="intro-copy"><p class="eyebrow">EIGHT WORLDS. ONE CHALLENGE. A NEW WAY TO CONNECT.</p>
-        <h1 id="quest-title" tabindex="-1">Every great discovery begins with a quest.</h1>
-        <p>Database technology has evolved. Some old connection challenges remain. Choose a world, uncover the problem, and discover a different approach—no Java knowledge needed.</p>
+        <div class="intro-copy"><p class="eyebrow">8 WORLDS · 3 ACTS · 150 LEARNING XP</p>
+        <h1 id="quest-title" tabindex="-1">${escapeHtml(quest.title)}</h1>
+        <p>${escapeHtml(quest.centralMessage)}</p>
         <div class="intro-facts"><span>◷ 3–5 minutes</span><span>Free</span><span>No account</span></div>
-        <p class="collection-count">${badges} of 8 world badges discovered · ${state.xp} / ${MAX_XP} learning XP</p></div>
+        <p class="collection-count">${badges} of 8 quest badges discovered · ${state.xp} / ${MAX_XP} total learning XP</p>
+        <button type="button" class="button button-quiet" data-action="back-to-quests">← All quests</button></div>
         <div class="intro-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="intro-core">OJP<br>QUEST</div></div>
     </section>
     <section class="world-picker" aria-labelledby="world-picker-title">
-        <div class="section-heading"><div><p class="eyebrow">PICK YOUR ADVENTURE</p><h2 id="world-picker-title" tabindex="-1">Which world will you save?</h2></div><p>Same connection crisis. Eight very different ways through it.</p></div>
-        <div class="world-grid">${worldCards()}</div>
+        <div class="section-heading"><div><p class="eyebrow">PICK A WORLD</p><h2 id="world-picker-title" tabindex="-1">Which adventure will you enter?</h2></div><p>Each story teaches the same three ideas from a different perspective.</p></div>
+        <div class="world-grid">${worldCards(quest)}</div>
     </section>
     <section class="collection-panel" aria-labelledby="collection-title"><div class="section-heading"><div><p class="eyebrow">YOUR COLLECTION</p><h2 id="collection-title">Badges on the horizon</h2></div></div>
-        <div class="badge-collection">${WORLDS.map(world => badgeCard(world, state.unlockedBadges.includes(world.id))).join('')}</div>
+        <div class="badge-collection">${quest.worlds.map(world => badgeCard(world, state.unlockedBadges.includes(world.id))).join('')}</div>
     </section>`, state);
 }
 
 function storyScreen(world, state) {
     const act = world.acts[state.currentAct];
+    const objective = getQuestById(world.questId).objectives[state.currentAct];
     return chrome(`<section class="story-panel" aria-labelledby="scene-title">
         <div class="scene-art theme-${world.id}">${art(world, `${world.name} scene`)}</div>
         <div class="scene-copy"><p class="eyebrow">${escapeHtml(world.voice)} <span>·</span> ACT ${state.currentAct + 1}</p>
@@ -110,13 +143,14 @@ function storyScreen(world, state) {
         <p class="story-text">${escapeHtml(act.story)}</p>
         <div class="scene-actions"><button type="button" class="button button-primary" data-action="enter-challenge">Face the challenge <span aria-hidden="true">→</span></button>
         <button type="button" class="button button-quiet" data-action="exit-world">Exit to world selection</button></div>
-        <p class="small-note">${state.completedObjectives.includes(OBJECTIVES[state.currentAct].id) ? 'You have already mastered this learning objective; replaying it earns no extra XP.' : `Master this challenge to earn ${XP_PER_OBJECTIVE} XP.`}</p></div>
+        <p class="small-note">${state.completedObjectives.includes(objective.id) ? 'You have already mastered this learning objective; replaying it earns no extra XP.' : `Master this challenge to earn ${XP_PER_OBJECTIVE} XP.`}</p></div>
     </section>`, state, world);
 }
 
 function challengeScreen(world, state) {
     const act = world.acts[state.currentAct];
     const challenge = act.challenge;
+    const objective = getQuestById(world.questId).objectives[state.currentAct];
     const progress = progressFor(world.id);
     const solved = progress?.solved === true;
     const attempted = (progress?.attempts || 0) > 0;
@@ -125,7 +159,7 @@ function challengeScreen(world, state) {
         ? `<div class="answer-feedback is-correct" role="status"><strong>Challenge mastered${xpJustEarned ? ` · +${xpJustEarned} XP` : ''}.</strong><p>${escapeHtml(challenge.explanation)}</p></div>`
         : attempted ? `<div class="answer-feedback is-incorrect" role="status"><strong>Not quite—try another approach.</strong><p>${escapeHtml(challenge.wrong)}</p>${hintsShown ? `<p class="hint-copy">Hint: ${escapeHtml(challenge.hints[Math.min(hintsShown - 1, challenge.hints.length - 1)])}</p>` : ''}</div>` : '';
     return chrome(`<section class="challenge-panel" aria-labelledby="challenge-title">
-        <div class="challenge-context"><p class="eyebrow">ACT ${state.currentAct + 1} · ${escapeHtml(OBJECTIVES[state.currentAct].title)}</p><h1 id="challenge-title" tabindex="-1">${escapeHtml(act.title)}</h1>
+        <div class="challenge-context"><p class="eyebrow">ACT ${state.currentAct + 1} · ${escapeHtml(objective.title)}</p><h1 id="challenge-title" tabindex="-1">${escapeHtml(act.title)}</h1>
         <p>${escapeHtml(challenge.prompt)}</p></div>
         <div class="answer-list" role="group" aria-label="Choose your answer">${challenge.options.map((option, index) => `<button class="answer-option" type="button" data-action="answer" data-answer="${index}" ${solved ? 'disabled' : ''}><span class="answer-letter" aria-hidden="true">${String.fromCharCode(65 + index)}</span><span>${escapeHtml(option)}</span></button>`).join('')}</div>
         ${feedback}${result}
@@ -135,39 +169,40 @@ function challengeScreen(world, state) {
 }
 
 function revealScreen(world, state) {
+    const quest = getQuestById(world.questId);
+    const reveal = quest.reveal;
     return chrome(`<section class="reveal-panel" aria-labelledby="reveal-title">
-        <p class="eyebrow">THE STORY MEETS THE REAL WORLD</p><div class="reveal-heading">${art(world, `${world.badge} emblem`)}<div><h1 id="reveal-title" tabindex="-1">Your Quest Is Complete</h1><p>${escapeHtml(world.victory)}</p></div></div>
-        <div class="reveal-copy"><p>The challenge you solved exists in real software systems. You’ve just discovered three important ideas:</p>
-        <ol><li><strong>Share resources intelligently.</strong> Independent application pools can reserve database connections that other applications need.</li>
-        <li><strong>Acquire resources when needed.</strong> Idle application-side connections don’t always need to hold physical database connections.</li>
-        <li><strong>Protect shared capacity.</strong> Slow operations shouldn’t be allowed to monopolize connections needed by other workloads.</li></ol>
-        <p><strong>These are real architectural challenges that Open J Proxy helps address.</strong> Open J Proxy is a free, Apache 2.0 open-source project that uses a JDBC Type 3 driver and server-managed database connection pools. It also provides capabilities such as client-side high availability, observability, and support for multiple database technologies.</p>
-        <p>It doesn’t make database capacity infinite or eliminate every failure. It gives applications better ways to coordinate and control how they use that capacity.</p></div>
-        <div class="reveal-links"><a href="documentation.html" data-track="documentation_opened">Explore the documentation ↗</a><a href="${EBOOK_SIGNUP_URL}" target="_blank" rel="noopener noreferrer" data-track="ebook_accessed">Request the OJP eBook (optional) ↗</a><a href="https://github.com/Open-J-Proxy/ojp" target="_blank" rel="noopener noreferrer" data-track="github_opened">Explore the OJP source ↗</a></div>
+        <p class="eyebrow">THE STORY MEETS THE REAL WORLD</p><div class="reveal-heading">${art(world, `${world.badge} emblem`)}<div><h1 id="reveal-title" tabindex="-1">${escapeHtml(reveal.title)}</h1><p>${escapeHtml(world.victory)}</p></div></div>
+        <div class="reveal-copy"><p>${escapeHtml(reveal.intro)}</p>
+        <ol>${reveal.points.map(point => `<li>${escapeHtml(point)}</li>`).join('')}</ol>
+        <p>${escapeHtml(reveal.closing)}</p></div>
+        <div class="reveal-links">${(quest.references || []).map(reference => `<a href="${escapeHtml(reference.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(reference.label)} ↗</a>`).join('')}<a href="documentation.html" data-track="documentation_opened">Explore the documentation ↗</a><a href="${EBOOK_SIGNUP_URL}" target="_blank" rel="noopener noreferrer" data-track="ebook_accessed">Request the OJP eBook (optional) ↗</a><a href="https://github.com/Open-J-Proxy/ojp" target="_blank" rel="noopener noreferrer" data-track="github_opened">Explore the OJP source ↗</a></div>
         <div class="scene-actions"><button type="button" class="button button-primary" data-action="complete-world">Continue to your achievement badge <span aria-hidden="true">→</span></button><button type="button" class="button button-quiet" data-action="previous">← Previous scene</button></div>
     </section>`, state, world);
 }
 
 function completionScreen(world, state) {
-    const otherBadges = WORLDS.filter(item => item.id !== world.id);
+    const quest = getQuestById(world.questId);
+    const questBadges = quest.worlds.filter(item => state.unlockedBadges.includes(item.id)).length;
+    const otherBadges = quest.worlds.filter(item => item.id !== world.id);
     return chrome(`<section class="completion-panel" aria-labelledby="complete-title">
         <div class="completion-celebration"><div class="earned-badge theme-${world.id}">${art(world, `${world.badge} achievement badge`)}</div>
-        <p class="eyebrow">ACHIEVEMENT UNLOCKED</p><h1 id="complete-title" tabindex="-1">${escapeHtml(world.badge)}</h1><p class="completion-quest">The Connection Crisis — Completed · ${escapeHtml(world.name)}</p><p class="victory-copy">${escapeHtml(world.victory)}</p>
-        <div class="completion-stats"><span><strong>${state.xp}</strong> / ${MAX_XP} XP</span><span><strong>${state.unlockedBadges.length}</strong> / 8 badges</span></div></div>
+        <p class="eyebrow">ACHIEVEMENT UNLOCKED</p><h1 id="complete-title" tabindex="-1">${escapeHtml(world.badge)}</h1><p class="completion-quest">${escapeHtml(quest.title)} · ${escapeHtml(world.name)}</p><p class="victory-copy">${escapeHtml(world.victory)}</p>
+        <div class="completion-stats"><span><strong>${state.xp}</strong> / ${MAX_XP} total XP</span><span><strong>${questBadges}</strong> / 8 quest badges</span></div></div>
         <div class="achievement-actions"><button type="button" class="button button-primary" data-action="share-badge">Share achievement</button><button type="button" class="button button-secondary" data-action="download-badge">Download badge card</button><button type="button" class="button button-quiet" data-action="replay-world" data-world="${world.id}">Replay this world</button><p class="share-status" role="status" aria-live="polite">${escapeHtml(notice)}</p></div>
         <section class="vault-panel" aria-labelledby="vault-title"><div class="vault-cover" aria-hidden="true"><span>OJP</span><strong>THE<br>CONNECTION<br>PLAYBOOK</strong><small>OPEN J PROXY · ADOPTION GUIDE</small></div>
-            <div class="vault-copy"><p class="eyebrow">YOUR NEXT CHAPTER</p><h2 id="vault-title">You've unlocked the Knowledge Vault.</h2><p>You've mastered the Connection Crisis. Keep exploring the real architecture behind the adventure with the Open J Proxy adoption eBook.</p>
+            <div class="vault-copy"><p class="eyebrow">YOUR NEXT CHAPTER</p><h2 id="vault-title">You've unlocked the Knowledge Vault.</h2><p>You've mastered ${escapeHtml(quest.title)}. Keep exploring the real architecture behind the adventure with the Open J Proxy adoption eBook.</p>
             <p class="vault-disclosure">The current eBook is delivered through the site's optional email-list signup; there is no public PDF download in this repository. Quest completion never requires an email or subscription.</p>
             <a class="button button-primary" href="${EBOOK_SIGNUP_URL}" target="_blank" rel="noopener noreferrer" data-track="ebook_accessed">Optional: request the eBook by email ↗</a>
             <div class="vault-links"><a href="documentation.html" data-track="documentation_opened">OJP documentation</a><a href="https://github.com/Open-J-Proxy/ojp" target="_blank" rel="noopener noreferrer" data-track="github_opened">GitHub repository</a></div></div>
         </section>
-        <section class="collection-panel completion-collection" aria-labelledby="more-badges-title"><h2 id="more-badges-title">More worlds are waiting</h2><div class="badge-collection">${otherBadges.map(item => badgeCard(item, state.unlockedBadges.includes(item.id))).join('')}</div><button type="button" class="button button-secondary" data-action="exit-world">Explore another world</button></section>
+        <section class="collection-panel completion-collection" aria-labelledby="more-badges-title"><h2 id="more-badges-title">More worlds are waiting</h2><div class="badge-collection">${otherBadges.map(item => badgeCard(item, state.unlockedBadges.includes(item.id))).join('')}</div><button type="button" class="button button-secondary" data-action="exit-world">Explore another world</button> <button type="button" class="button button-quiet" data-action="back-to-quests">Explore another quest</button></section>
         <p class="cosmetic-note">Badges and XP are saved on this device as a personal achievement; they are not verified credentials.</p>
     </section>`, state, world);
 }
 
 function activeWorld() {
-    return WORLDS.find(world => world.id === game.getState().selectedWorld);
+    return getWorldById(game.getState().selectedWorld);
 }
 
 function render(focus = true) {
@@ -183,7 +218,8 @@ function render(focus = true) {
         window.scrollTo(0, 0);
         root.querySelector('[tabindex="-1"]')?.focus({ preventScroll: true });
     }
-    document.title = world ? `${world.name} — OJP Quest` : 'OJP Quest — Open J Proxy';
+    const quest = getQuestById(state.selectedQuestId);
+    document.title = world ? `${world.name} — ${quest.title}` : quest ? `${quest.title} — OJP Quest` : 'OJP Quest — Open J Proxy';
 }
 
 function markEvent(name, detail = {}) {
@@ -192,14 +228,15 @@ function markEvent(name, detail = {}) {
 
 function badgeSvg(world) {
     const [base, accent] = world.palette;
+    const quest = getQuestForWorld(world.id);
     return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
         <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="${base}"/><stop offset="1" stop-color="${accent}"/></linearGradient></defs>
         <rect width="1200" height="630" rx="36" fill="#101d32"/><circle cx="944" cy="314" r="240" fill="url(#bg)" opacity=".94"/>
-        <g transform="translate(824 194) scale(2.4)" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">${iconMarkup[world.id]}</g>
+        <g transform="translate(824 194) scale(2.4)" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">${iconMarkup[world.icon || world.id]}</g>
         <text x="84" y="105" fill="#91d8ff" font-family="Arial,sans-serif" font-size="26" font-weight="700" letter-spacing="5">OPEN J PROXY · OJP QUEST</text>
         <text x="84" y="235" fill="#fff" font-family="Arial,sans-serif" font-size="24">ACHIEVEMENT UNLOCKED</text>
         <text x="84" y="310" fill="#fff" font-family="Arial,sans-serif" font-size="54" font-weight="700">${escapeHtml(world.badge)}</text>
-        <text x="84" y="370" fill="#dbe9f5" font-family="Arial,sans-serif" font-size="26">The Connection Crisis — Completed</text>
+        <text x="84" y="370" fill="#dbe9f5" font-family="Arial,sans-serif" font-size="26">${escapeHtml(quest.title)} — Completed</text>
         <text x="84" y="415" fill="#dbe9f5" font-family="Arial,sans-serif" font-size="22">${escapeHtml(world.name)}</text>
         <text x="84" y="520" fill="#91d8ff" font-family="Arial,sans-serif" font-size="24">openjproxy.com</text>
     </svg>`;
@@ -223,7 +260,7 @@ root?.addEventListener('click', async event => {
     if (trackedLink) markEvent(trackedLink.dataset.track);
     const control = event.target.closest('[data-action]');
     if (!control) return;
-    const { action, world: worldId } = control.dataset;
+    const { action, world: worldId, quest: questId } = control.dataset;
     const state = game.getState();
     const currentWorld = activeWorld();
     notice = '';
@@ -232,6 +269,13 @@ root?.addEventListener('click', async event => {
             event.preventDefault();
             window.history.back();
             return;
+        case 'select-quest':
+            game.startQuest(questId);
+            markEvent('quest_selected', { quest: questId });
+            break;
+        case 'back-to-quests':
+            game.goToQuests();
+            break;
         case 'start-world':
             game.startWorld(worldId);
             hintsShown = 0;
