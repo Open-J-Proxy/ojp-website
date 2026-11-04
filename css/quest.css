@@ -24,20 +24,8 @@
     color: var(--quest-muted);
 }
 
-.quest-page header {
-    background: #f9fbfe;
-}
-
-.quest-page .mobile-menu-toggle span {
-    background: #163355;
-}
-
-.quest-page nav a[aria-current="page"] {
-    color: var(--primary-blue);
-}
-
 .quest-app {
-    min-height: calc(100vh - 82px);
+    min-height: 100vh;
     padding: 1.25rem clamp(1rem, 3vw, 2.5rem) 2rem;
     background:
         radial-gradient(ellipse at 50% -20%, rgba(35, 101, 151, 0.25), transparent 60%),
@@ -73,12 +61,18 @@
     color: var(--quest-cyan);
 }
 
-.quest-topline a {
+.quest-topline .quest-leave {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
     color: var(--quest-muted);
+    font-size: 1.1rem;
     letter-spacing: 0;
+    white-space: nowrap;
 }
 
-.quest-topline a:hover {
+.quest-topline .quest-leave:hover {
     color: #fff;
 }
 

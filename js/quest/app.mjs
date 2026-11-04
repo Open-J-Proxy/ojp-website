@@ -73,7 +73,7 @@ function chrome(content, state, world = null) {
     const act = state.currentAct;
     const progressPercent = isInWorld ? (state.phase === 'reveal' || state.phase === 'complete' ? 100 : Math.round(((act + (state.phase === 'challenge' && progressFor(world.id)?.solved ? 1 : 0)) / 3) * 100)) : 0;
     return `<div class="quest-frame">
-        <div class="quest-topline"><a href="index.html">← Open J Proxy</a><span>OJP QUEST <span aria-hidden="true">·</span> 3–5 MIN <span aria-hidden="true">·</span> FREE</span>
+        <div class="quest-topline"><a href="#" class="quest-leave" data-action="leave"><span aria-hidden="true">←</span> Leave</a><span>OJP QUEST <span aria-hidden="true">·</span> 3–5 MIN <span aria-hidden="true">·</span> FREE</span>
             ${isInWorld ? `<span class="quest-xp" aria-label="${state.xp} experience points">${state.xp} XP</span>` : `<span class="quest-xp">${state.xp} XP</span>`}</div>
         ${isInWorld ? `<div class="quest-progress" role="progressbar" aria-label="Quest progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progressPercent}" aria-valuetext="${state.phase === 'reveal' || state.phase === 'complete' ? 'Quest complete' : `Act ${act + 1} of 3`}"><div class="quest-progress-label"><span>${escapeHtml(world.name)}</span><span>${state.phase === 'reveal' || state.phase === 'complete' ? 'Complete' : `Act ${act + 1} of 3`}</span></div><div class="progress-track"><span style="width:${progressPercent}%"></span></div></div>` : ''}
         ${content}
@@ -228,6 +228,10 @@ root?.addEventListener('click', async event => {
     const currentWorld = activeWorld();
     notice = '';
     switch (action) {
+        case 'leave':
+            event.preventDefault();
+            window.history.back();
+            return;
         case 'start-world':
             game.startWorld(worldId);
             hintsShown = 0;

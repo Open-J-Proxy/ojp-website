@@ -142,6 +142,8 @@ This website is part of the Open J Proxy project. See the main repository for li
 
 OJP Quest is a static, account-free, three-act learning game at [`quest.html`](quest.html). The homepage presents a dismissible invitation; a persistent navigation link is available across the site's main pages. Quest code and content load only on the quest page. All artwork is generated as original inline SVG, and the feature adds no frontend dependencies, backend, cookies, or external runtime services.
 
+The quest page omits the site's navigation menu. Its enlarged top-left **← Leave** link calls browser history back, returning to the previous page without resetting quest progress. With no previous history entry, it stays on the quest page.
+
 ### Content and game logic
 
 - `js/quest/content.mjs` contains the three shared learning objectives, eBook signup destination, and all eight original worlds. Each world defines its theme, badge title, three stories, contextual challenges, answer explanations, hints, and victory copy.
