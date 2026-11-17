@@ -14,7 +14,7 @@ Official website for Open J Proxy - The intelligent JDBC proxy for scalable Java
 
 ## About Open J Proxy
 
-Open J Proxy (OJP) is an open-source Java project that acts as a JDBC Type 3 driver and Layer 7 proxy server. It helps decouple Java applications from direct database connection management, enabling:
+Open J Proxy (OJP) is an open-source, intelligent database proxy and connectivity control plane that centralizes connection management, optimizes database resource utilization, and provides workload isolation, intelligent routing, and high availability. It helps decouple Java applications from direct database connection management, enabling:
 
 - **Elastic Scaling**: Scale applications without connection storms
 - **Built-in Protection**: Circuit breakers, backpressure, and slow query segregation
